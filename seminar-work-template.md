@@ -8,8 +8,34 @@ This section specifies the functional requirements.
 
 ### User requirements
 
-[*List of user requirements*]
+- (Zjistit, jestli máme řešit něco na vyšší úrovni, než předmět.)
+- Vytvořit, smazat, upravit předmět
+  - Příslušnost do studijního programu
+  - Prerekvizity
+- Vytvořit, smazat, upravit rozvrhový lístek
+  - Rozvrhový lístek se skládá z rozvrhových termínů
 
+- Vytvořit, smazat, upravit místo
+- Vytvořit, smazat, upravit učebnu
+
+- Specifikace doporučeného průběhu studia
+
+- Specifikace harmonogramu (semestru)
+
+- Kontroly
+  - Učitel může navštěvovat všechny termíny
+  - Studenti můžou navštěvovat všechny termíny na povinné předměty
+  - V učebně nejsou dva termíny ve stejnou dobu
+  - Doporučený průběh studia odpovídá prerekvizitám
+
+- Zobrazení rozvrhu
+  - Rozvrh studenta
+  - Rozvrh učitele
+  - Rozvrh předmětu
+  - Rozvrh učebny
+  - Rozvrh lístku
+
+- Statický report o vytížení místností v jednotlivých semestrech
 
 ### System requirements
 
