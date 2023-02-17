@@ -1,4 +1,4 @@
-# Student information system - [*module title*]
+# Student information system - Modul rozvrhy
 
 [*Module description*]
 
