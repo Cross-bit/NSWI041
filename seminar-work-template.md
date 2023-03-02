@@ -1,60 +1,81 @@
 # Student information system - Modul rozvrhy
 
-[*Module description*]
+Modul rozvrhy slouží k vytváření a prohlížení rozvrhů. 
+V rámci modulu jsou vedeny předměty a jejich příslušnost do studijních programů a jednotlivých semestrů studia, 
+ve kterých jsou v rámci programu doporučeny. 
+Dále jsou v rámci modulu vedeny učebny pro výuku a jejich kapacita. 
+Pro každý předmět jsou evidovány rozvrhové lístky přednášek a cvičení, včetně jejich kapacit a vyučujících. 
+Modul umožňuje rozvrhové komisi v jednotlivých semestrech vytváření centrálních rozvrhů přiřazováním rozvrhových lístků k učebnám na konkrétní den v týdnu a hodinu. 
+Předměty ve stejném studijním programu a semestru musí být rozvrhovány tak, aby měli studenti v daném studijním programu a semestru možnost tyto předměty navštěvovat. 
+Dále nesmí docházet k časovým kolizím jednoho učitele. 
+Modul umožňuje vytvářet statistické reporty o vytíženosti místností v jednotlivých semestrech. 
 
-## Functional Requirements
+## Funkční požadavky
 
-This section specifies the functional requirements.
+### Slovník
 
-### User requirements
+Rozvrhový lístek = základní jednotka rovržení výuky předmětu, určuje čas a místo výuky, výuku předmětu zajišťuje učitel, který je uveden v rozvrhovém lístku. Rozvrhový 
+lístek je vytvořen pro každý předmět, který se vyučuje v daném semestru.
 
-- (Zjistit, jestli máme řešit něco na vyšší úrovni, než předmět.)
-- Vytvořit, smazat, upravit předmět
-  - Příslušnost do studijního programu
-  - Prerekvizity
-- Vytvořit, smazat, upravit rozvrhový lístek
-  - Rozvrhový lístek se skládá z rozvrhových termínů
+### Uživatelské požadavky
 
-- Vytvořit, smazat, upravit místo
-- Vytvořit, smazat, upravit učebnu
+- Děkanát by měl být schopen vytvořit, smazat, upravit předmět.
+- Děkanát by měl být schopen specifikovat příslušnost předmětu do studijního programu a prerekvizity, korekvizity... předmětu.
+- Rozvrhová komise by měla být schopna vytvořit, smazat a upravit rozvrhový lístek
 
-- Specifikace doporučeného průběhu studia
+- Děkanát by měl být schopen zaevidovat, smazat, upravit místo (budova), aby:
+   - Se mohla k místu přiřadit učebna a provést kontrala návaznosti rovržení výuky
+   - Studenti a učitelé věděli, kam se mají dostavit na výuku.
+   - Rozvrhová komise mohla dát předměty pro stejný studijní program a semestr na jedno místo.
+- Děkanát by měl být schopen zaevidovat, smazat, upravit učebnu, přiradit ji k místu a specifikovat její kapacitu. 
 
-- Specifikace harmonogramu (semestru)
+- Děkanát by měl být schopen specifikovat průběh doporučeného průběhu studia, aby:
+  - Studenti věděli, ve kterých semestrech si mají zapsat jaké předměty, aby měli splněné prerekvizity a byli schopni lépe splnit všechny požadavky.
+  - Rozvrhová komise věděla, které kombinace předmětů bude mít většina studentů zapsané ve stejném semestru a mohla je dát na různá místa v rozvrhu.
 
-- Kontroly
-  - Učitel může navštěvovat všechny termíny
-  - Studenti můžou navštěvovat všechny termíny na povinné předměty
-  - V učebně nejsou dva termíny ve stejnou dobu
-  - Doporučený průběh studia odpovídá prerekvizitám
+- Děkanát by měl být schopen specifikovat harmonogram, aby:
+  - Všichni věděli, kdy začíná a končí výuka, zkoušková období, kdy jsou prázdniny.
+  - Systém věděl, kdy má zobrazovat jaký rozvrh.
 
-- Zobrazení rozvrhu
-  - Rozvrh studenta
-  - Rozvrh učitele
-  - Rozvrh předmětu
-  - Rozvrh učebny
-  - Rozvrh lístku
+- Systém provede kontrolu, že učitel může navštěvovat všechny termíny jeho výuky.
+- Systém provede kontrolu, že studenti mohou navštěvovat všechny termíny na povinné předměty.
+- Systém provede kontrolu, že v učebně nejsou dva termíny ve stejnou dobu.
+- Systém provede kontrolu, že doporučený průběh studia odpovídá prerekvizitám.
 
-- Statický report o vytížení místností v jednotlivých semestrech
+- Systém by měl umožnit export rozvrhů.
+- Student by měl být schopen zobrazit si svůj rozvrh podle zapsaných předmětů.
+- Uživatel by měl být schopen si zobrazit rozvrh učebny.
+- Uživatel by měl být schopen zobrazit si rozvrh učitele.
+- Uživatel by měl být schopen zobrazit si rovrh předmětu.
+- Uživatel by měl být schopen zobrazit si rovrh rozvrhového lístku.
 
-### System requirements
+- Učitel může zrušit svou výuku v daném termínu, když zrovna ten den nemůže vyučovat.
+- Systém upozorní uživatele na odpadlou výuku, aby věděli, že v ten termín nemusí přijít.
+
+- Děkanát a rozvrhová komise potřebuje, aby systém automaticky uměl vytvořit statický report o vytížení místností v jednotlivých semestrech.
+
+### Systémové požadavky
 
 [*Document here your system requirements as use case diagrams.*]
-větší detail než user requirements¨
-jak ten samotný systéme funguje 
 
 
 #### Actors
 
 [*Document here all actors from the use case diagrams. Make a subsection for each actor and their short description in each subsection.*]
 
-osoby interagující se systémem 
-(né všichni učitelé jsou zaměstnanci)
-
 
 ##### [*Actor name*]
 
-[*Actor description*]
+Děkanát = je výkonný orgán řízení fakulty po stránce hospodářské a administrativní.
+
+Rozvrhová komise = Poradní orgán pro děkanát, který se zabývá vytvářením předmětů.
+
+Uživatel = Osoba, která má přístup do univerzitního systému.
+
+Student = Osoba, která je zapsána na studium.
+
+Učitel = Osoba, která vyučuje předmět.
+
 
 #### Use cases
 
@@ -121,3 +142,4 @@ navíc description entit co skutečně znamenají
 ### [*Class name*]
 
 [*Class description*]
+
