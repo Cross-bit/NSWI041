@@ -18,7 +18,14 @@ Rozvrhový lístek = základní jednotka rovržení výuky předmětu, určuje �
 lístek je vytvořen pro každý předmět, který se vyučuje v daném semestru.
 
 ### Uživatelské požadavky
+Každý opravit svých 5 uživatelský požadavků.
 
+Vybrat si 2 uživatelké požadavky/skupiny požadavků (viz Markovy poznámky na messengeru) a zabrat si je připsáním jména k požadavku.
+
+Rozepsat požadavky detailně do use casů a případně specifikovat entity s atributy (viz poznámky).
+
+
+Ondřej
 - Děkanát by měl být schopen vytvořit, smazat, upravit předmět.
 - Děkanát by měl být schopen specifikovat příslušnost předmětu do studijního programu a prerekvizity, korekvizity... předmětu.
 - Rozvrhová komise by měla být schopna vytvořit, smazat a upravit rozvrhový lístek
@@ -29,6 +36,7 @@ lístek je vytvořen pro každý předmět, který se vyučuje v daném semestru
    - Rozvrhová komise mohla dát předměty pro stejný studijní program a semestr na jedno místo.
 - Děkanát by měl být schopen zaevidovat, smazat, upravit učebnu, přiradit ji k místu a specifikovat její kapacitu. 
 
+Marek
 - Děkanát by měl být schopen specifikovat průběh doporučeného průběhu studia, aby:
   - Studenti věděli, ve kterých semestrech si mají zapsat jaké předměty, aby měli splněné prerekvizity a byli schopni lépe splnit všechny požadavky.
   - Rozvrhová komise věděla, které kombinace předmětů bude mít většina studentů zapsané ve stejném semestru a mohla je dát na různá místa v rozvrhu.
@@ -40,16 +48,20 @@ lístek je vytvořen pro každý předmět, který se vyučuje v daném semestru
 - Systém provede kontrolu, že učitel může navštěvovat všechny termíny jeho výuky.
 - Systém provede kontrolu, že studenti mohou navštěvovat všechny termíny na povinné předměty.
 - Systém provede kontrolu, že v učebně nejsou dva termíny ve stejnou dobu.
+
+Šimon
 - Systém provede kontrolu, že doporučený průběh studia odpovídá prerekvizitám.
 
 - Systém by měl umožnit export rozvrhů.
 - Student by měl být schopen zobrazit si svůj rozvrh podle zapsaných předmětů.
 - Uživatel by měl být schopen si zobrazit rozvrh učebny.
 - Uživatel by měl být schopen zobrazit si rozvrh učitele.
-- Uživatel by měl být schopen zobrazit si rovrh předmětu.
+
+Michael
+- Uživatel by měl být schopen zobrazit si rovrh předmětu. Michael
 - Uživatel by měl být schopen zobrazit si rovrh rozvrhového lístku.
 
-- Učitel může zrušit svou výuku v daném termínu, když zrovna ten den nemůže vyučovat.
+- Učitel může zrušit svou výuku v daném termínu, když zrovna ten den nemůže vyučovat. Michael
 - Systém upozorní uživatele na odpadlou výuku, aby věděli, že v ten termín nemusí přijít.
 
 - Děkanát a rozvrhová komise potřebuje, aby systém automaticky uměl vytvořit statický report o vytížení místností v jednotlivých semestrech.
