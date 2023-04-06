@@ -1,4 +1,4 @@
-# Student information system - Modul rozvrhy
+# Studentský informační systém - Modul rozvrhy
 
 Modul rozvrhy slouží k vytváření a prohlížení rozvrhů. 
 V rámci modulu jsou vedeny předměty a jejich příslušnost do studijních programů a jednotlivých semestrů studia, 
