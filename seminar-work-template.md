@@ -60,12 +60,12 @@ Marek
 Michael
 - Jako student si musím být schopen zobrazit rozvrh předmětu, abych si mohl vybrat pro mě vhodnou paralelku přednášky či konkrétní vhodné cvičení.
 - Jako student si musím být schopen zobrazit rozvrh rozvrhového lístku, abych se mohl rozhodnout zda mi vyhovuje.
-- Jako student bych měl mít možnost nechat si zasílat upozornění na odpadlou výuku, abych věděl, že v daný termín nemusím přijít.
-- Jako děkanát si musím být schopný zobrazit rozvrh předmětu, abych mohl kontrolovat zda probíhá výuka.
+- Jako student bych měl mít možnost nechat si zasílat upozornění na změnu ve výuce, abych věděl, že kdy a kam mám přijít.
+- Jako děkanát si musím být schopný zobrazit rozvrh předmětu, abych mohl kontrolovat, zda probíhá výuka.
 - Jako rozvrhová komise si musíme být schopni zobrazit rozvrh rozvrhového lístku, abychom mohli zkontrolovat, že daný rozvrhový lístek dává smysl (jednotlivé části se nepřekryjí atd.).
-- Jako učitel potřebuji mít možnost zrušit svou výuku v daném termínu, abych dal vědět účastníkům výuky, že se nemusí dostavit. Michael
+- Jako učitel potřebuji mít možnost zrušit svou výuku v daném termínu, abych dal vědět účastníkům výuky, že se nemusí dostavit.
 - Jako děkanát bychom měli mít možnost si nechat automaticky vygenerovat statický report o vytížení místností v jednotlivých semestrech, abychom mohli dělat orgranizační rozhodnutí na základě těchto dat (úprava vytápění místností, zajištění nových prostor atd.).
-- Jako rozvrhová komise bychom měli mít možnost si nechat automaticky vygenerovat statický report o vytížení místností v jednotlivých semestrech, abychom mohli lépe rozvrhovat výuku na základě těchto dat.
+- Jako rozvrhová komise bychom měli mít možnost si nechat automaticky vygenerovat statický report o vytížení místností v jednotlivých semestrech, abychom mohli lépe rozvrhovat výuku na základě těchto dat. Michael
 
 ### Systémové požadavky
 
@@ -85,6 +85,86 @@ Marek
 
 Michael
 
+```plantuml
+@startuml
+left to right direction
+
+'======== Actors ========
+actor Student
+actor Děkanát
+actor "Rozvrhová komise" as RK
+
+'======== Use Cases ========
+package "Modul rozvrhy" {
+  Package Předměty {
+    usecase "Zobrazit si rovrh předmětu" as UCP1
+    usecase "Zobrazit si rozvrh rozvrhového lístku" as UCP2
+  }
+
+  Package Výstupy {
+    usecase "Vytvoření reportu o využití místností" as UCV1
+  }
+}
+
+'======== Use case links ========
+Student --> UCP1
+Student --> UCP2
+Děkanát --> UCP1
+Děkanát --> UCV1
+
+'Right hand side
+UCP2 <-- RK
+UCV1 <-- RK
+@enduml
+```
+
+#### Use case scenario
+**Precondition**
+
+Uživatel je přihlášen jako člen děkanátu
+
+**Normal**
+
+1. Otevře si `Modul rozvrhy`.
+2. Vybere podsekci `Výstupy`.
+3. Zvolí možnost `Vytvoření reportu o využití místností`.
+4. Vybere si, za které semestry chce vygenerovat daný report.
+5. Systém zkontroluje, že je zvolený nějaký semestr.
+6. Systém vygeneruje report.
+7. Uživatel si stáhne daný report.
+
+**Alternativní scénáře**
+- Uživatel nezvolil žádné období (semestr). V tom případě je vyzván ke zvolení nějakého období.
+- Nastane chyba při zpracování dat. V tom případě se chyba zaloguje a uživatel je o ní informován.
+
+**Stav systému po dokončení operace**
+- Uživatel si úspěšně uložil vygenerovaný report.
+- Při zpracování nastala chyba a tato chyba byla zologována pro další šetření.
+
+
+```plantuml
+@startuml
+left to right direction
+
+'======== Actors ========
+actor Student
+actor Učitel
+
+'======== Use Cases ========
+package "Modul rozvrhy" {
+  Package "Můj rozvrh"{
+    usecase "Zrušit výuku" as UCMR1
+    usecase "Upozornit na změnu ve výuce" as UCMR2
+  }
+}
+
+'======== Use case links ========
+Učitel --> UCMR1
+Student --> UCMR2
+UCMR1 .> UCMR2 : << extends >>
+
+@enduml
+```
 
 
 #### Actors
@@ -170,4 +250,91 @@ navíc description entit co skutečně znamenají
 ### [*Class name*]
 
 [*Class description*]
+
+
+
+
+```plantuml
+@startuml
+
+' ======= the actors =========
+
+actor :Left 1: as Left1 << Human >> #f8fdff
+actor :Right 1: as Right1 << Stereotype >>
+actor :Left 2: as Left2 << Human >> #eaf0f9
+
+actor :Left 3: as Left3 << Human >> #eaf0f9
+actor :Left 4: as Left4 << Human >> #eaf0f9
+
+actor :Left 5: as Left5  #eaf0f9
+actor :Right 3: as Right3  #eaf0f9
+actor :Right 2: as Right2  #eaf0f9
+
+rectangle "My Rectangle" #C0C0C0 {
+    left to right direction
+
+    ' ====== the use cases =========
+
+    (Use case A) as (UseCaseA) #83d3f6
+    (Use case B) as (UseCaseB) #83d3f6
+    (Use case C) as (UseCaseC) #83d3f6
+    (Use case D) as (UseCaseD) #83d3f6
+    (Use case E) as (UseCaseE) #83d3f6
+
+    (Use case F) as (UseCaseF) #7a97ca
+    (Use case G) as (UseCaseG) #7a97ca
+    (Use case H) as (UseCaseH) #7a97ca
+
+    (Use case I) as (UseCaseI) #ffcb0c
+    (Use case J) as (UseCaseJ) #ffcb0c
+    (Use case K) as (UseCaseK) #ffcb0c
+    (Use case L) as (UseCaseL) #ffcb0c
+
+    ' Prevent PlantUML from re-ordering these items
+    together {
+        (Use case M) as (UseCaseM) #a4e148
+        (Use case N) as (UseCaseN) #a4e148
+        (Use case O) as (UseCaseO) #a4e148
+    }
+
+    ' ==== the use case links. Note '---' means longer line ======
+
+    ' These Actors are positioned on the left hand side.
+    ' Note the Actor is referenced first, and the Use-Case second.
+    Left1 --- (UseCaseA)
+    Left1 -- (UseCaseB)
+    Left1 -- (UseCaseC)
+    Left1 -- (UseCaseD)
+    Left1 -- (UseCaseE)
+
+    Left2 -- (UseCaseF)
+    Left2 -- (UseCaseG)
+    (UseCaseF) .> (UseCaseA) : << extends >>
+    (UseCaseG) .> (UseCaseA) : << extends >>
+
+    Left3 -- (UseCaseG)
+    Left3 -- (UseCaseH)
+    (UseCaseH) .> (UseCaseD) : << extends >>
+
+    Left4 -- (UseCaseI)
+    Left4 -- (UseCaseJ)
+    Left4 -- (UseCaseK)
+    Left4 -- (UseCaseL)
+
+    Left5 -- (UseCaseM)
+
+    ' These dotted lines will cause a better placement of the
+    ' Use-Cases, compared to using the normal non-dotted lines.
+    (UseCaseM) <. (UseCaseN)
+    (UseCaseO) .> (UseCaseM)
+
+    ' These Actors are positioned on the right hand side.
+    ' Note the Use-Case is referenced first, and the Actor second.
+    (UseCaseN) --- Right3
+    (UseCaseA) --- Right1
+    (UseCaseD) --- Right2
+}
+
+@enduml
+```
 
