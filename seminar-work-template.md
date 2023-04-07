@@ -22,7 +22,7 @@ Každý opravit svých 5 uživatelský požadavků.
 
 Vybrat si 2 uživatelké požadavky/skupiny požadavků (viz Markovy poznámky na messengeru) a zabrat si je připsáním jména k požadavku.
 
-Rozepsat požadavky detailně do use casů a případně specifikovat entity s atributy (viz poznámky).
+Rozepsat požadavky do use casů (z toho dva detailně) a případně specifikovat entity s atributy (viz poznámky).
 
 
 Ondřej
@@ -58,17 +58,33 @@ Marek
 - Uživatel by měl být schopen zobrazit si rozvrh učitele.
 
 Michael
-- Uživatel by měl být schopen zobrazit si rovrh předmětu. Michael
-- Uživatel by měl být schopen zobrazit si rovrh rozvrhového lístku.
-
-- Učitel může zrušit svou výuku v daném termínu, když zrovna ten den nemůže vyučovat. Michael
-- Systém upozorní uživatele na odpadlou výuku, aby věděli, že v ten termín nemusí přijít.
-
-- Děkanát a rozvrhová komise potřebuje, aby systém automaticky uměl vytvořit statický report o vytížení místností v jednotlivých semestrech.
+- Jako student si musím být schopen zobrazit rozvrh předmětu, abych si mohl vybrat pro mě vhodnou paralelku přednášky či konkrétní vhodné cvičení.
+- Jako student si musím být schopen zobrazit rozvrh rozvrhového lístku, abych se mohl rozhodnout zda mi vyhovuje.
+- Jako student bych měl mít možnost nechat si zasílat upozornění na odpadlou výuku, abych věděl, že v daný termín nemusím přijít.
+- Jako děkanát si musím být schopný zobrazit rozvrh předmětu, abych mohl kontrolovat zda probíhá výuka.
+- Jako rozvrhová komise si musíme být schopni zobrazit rozvrh rozvrhového lístku, abychom mohli zkontrolovat, že daný rozvrhový lístek dává smysl (jednotlivé části se nepřekryjí atd.).
+- Jako učitel potřebuji mít možnost zrušit svou výuku v daném termínu, abych dal vědět účastníkům výuky, že se nemusí dostavit. Michael
+- Jako děkanát bychom měli mít možnost si nechat automaticky vygenerovat statický report o vytížení místností v jednotlivých semestrech, abychom mohli dělat orgranizační rozhodnutí na základě těchto dat (úprava vytápění místností, zajištění nových prostor atd.).
+- Jako rozvrhová komise bychom měli mít možnost si nechat automaticky vygenerovat statický report o vytížení místností v jednotlivých semestrech, abychom mohli lépe rozvrhovat výuku na základě těchto dat.
 
 ### Systémové požadavky
 
 [*Document here your system requirements as use case diagrams.*]
+
+Ondřej
+
+⋮
+
+Marek
+
+⋮
+
+Šimon
+
+⋮
+
+Michael
+
 
 
 #### Actors
@@ -78,13 +94,13 @@ Michael
 
 ##### [*Actor name*]
 
-Děkanát = je výkonný orgán řízení fakulty po stránce hospodářské a administrativní.
+Děkanát = Je výkonný orgán řízení fakulty po stránce hospodářské a administrativní.
 
 Rozvrhová komise = Poradní orgán pro děkanát, který se zabývá vytvářením předmětů.
 
 Uživatel = Osoba, která má přístup do univerzitního systému.
 
-Student = Osoba, která je zapsána na studium.
+Student = Osoba, která je zapsána ke studiu.
 
 Učitel = Osoba, která vyučuje předmět.
 
