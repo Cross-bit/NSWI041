@@ -45,7 +45,7 @@ Ondřej
    - Studenti a učitelé věděli, kam se mají dostavit na výuku.
    - Rozvrhová komise mohla dát předměty pro stejný studijní program a semestr na jedno místo.
 
-- Děkanát by měl být schopen zaevidovat do systému učebnu, tj. přiradit ji k místu a specifikovat její kapacitu, aby mohla být přidělena k jednotlivým rozvrhovým lístkům.
+- Děkanát by měl být schopen zaevidovat do systému učebnu, tj. přiradit ji k místu a specifikovat její kapacitu, aby mohla být přidělena k jednotlivým rozvrhovým lístkům a studenti a učitelé věděli kde budou mít výuku.
 
 Marek
 - Děkanát by měl být schopen specifikovat průběh doporučeného průběhu studia, aby:
@@ -150,7 +150,7 @@ Uživatel je přihlášen jako člen děkanátu
 
 **Stav systému po dokončení operace**
 - Uživatel si úspěšně uložil vygenerovaný report.
-- Při zpracování nastala chyba a tato chyba byla zologována pro další šetření.
+- Při zpracování nastala chyba a tato chyba byla zalogována pro další šetření.
 
 
 ```plantuml
