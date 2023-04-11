@@ -26,15 +26,26 @@ Rozepsat požadavky do use casů (z toho dva detailně) a případně specifikov
 
 
 Ondřej
-- Děkanát by měl být schopen vytvořit, smazat, upravit předmět.
-- Děkanát by měl být schopen specifikovat příslušnost předmětu do studijního programu a prerekvizity, korekvizity... předmětu.
-- Rozvrhová komise by měla být schopna vytvořit, smazat a upravit rozvrhový lístek
+- Děkanát potřebuje mít možnost vytvořit předmět, aby rozvrhová komise mohla vytvořit rozvrhové lístky danému předmětu.
 
-- Děkanát by měl být schopen zaevidovat, smazat, upravit místo (budova), aby:
+- Děkanát potřebuje mít možnost upravit předmět, aby pokud dojde ke změnám v daném předmětu(např. změna názvu), rozvrhová komise pracovala s aktuálními daty.
+
+- Děkanát potřebuje mít možnost smazat předmět, aby pokud se daný předmět zruší, nebyl již v systému dále registrovaný a rozvrhová komise k tomuto předmětu nevytvářela rozvrhové lístky.
+
+- Děkanát by měl být schopen specifikovat příslušnost předmětu do studijního programu a prerekvizity, korekvizity... předmětu, aby studenti při zápisu věděli, zdali mají již všechny potřebné znalosti pro tento předmět.
+
+- Rozvrhová komise by měla být schopna vytvořit rozvhový lístek, aby se studenti mohli na daný předmět zapsat.
+
+- Rozvrhová komise by měla být schopna smazat rozvhový lístek, aby se studenti na příslušný předmět nemohli zapisovat, pokud dojde ke zrušení předmětu, ke kterému je tento lístek určen.
+
+- Rozvrhová komise by měla být schopna upravit rozvhový lístek, aby pokud vznikne při vytváření lístku chyba v obsahu, mohl být lístek upraven a studenti měli aktuální platná data.
+
+- Děkanát by měl být schopen zaevidovat, smazat, upravit místo (areál ve kterém výuka bude probíhat), aby:
    - Se mohla k místu přiřadit učebna a provést kontrala návaznosti rovržení výuky
    - Studenti a učitelé věděli, kam se mají dostavit na výuku.
    - Rozvrhová komise mohla dát předměty pro stejný studijní program a semestr na jedno místo.
-- Děkanát by měl být schopen zaevidovat, smazat, upravit učebnu, přiradit ji k místu a specifikovat její kapacitu. 
+
+- Děkanát by měl být schopen zaevidovat do systému učebnu, tj. přiradit ji k místu a specifikovat její kapacitu, aby mohla být přidělena k jednotlivým rozvrhovým lístkům.
 
 Marek
 - Děkanát by měl být schopen specifikovat průběh doporučeného průběhu studia, aby:
