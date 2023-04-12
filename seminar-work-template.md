@@ -18,11 +18,13 @@ Rozvrhový lístek = základní jednotka rovržení výuky předmětu, určuje �
 lístek je vytvořen pro každý předmět, který se vyučuje v daném semestru.
 
 ### Uživatelské požadavky
-Každý opravit svých 5 uživatelský požadavků.
+**TODO:**
 
-Vybrat si 2 uživatelké požadavky/skupiny požadavků (viz Markovy poznámky na messengeru) a zabrat si je připsáním jména k požadavku.
+- Každý opravit svých 5 uživatelský požadavků.
 
-Rozepsat požadavky do use casů (z toho dva detailně) a případně specifikovat entity s atributy (viz poznámky).
+- Vybrat si 2 uživatelké požadavky/skupiny požadavků (viz Markovy poznámky na messengeru) a zabrat si je připsáním jména k požadavku.
+
+- Rozepsat požadavky do use casů (z toho dva detailně) a případně specifikovat entity s atributy (viz poznámky).
 
 
 Ondřej
