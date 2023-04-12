@@ -54,14 +54,15 @@ Marek
 
 - Jako student nebo učitel potřebuju exportovat svůj rozvrh, abych si ho mohl dát do kalendáře.
 - Jako student nebo učitel potřebuju zobrazit svůj rozvrh, abych věděl, kdy a kde mám být.
-- Jako uživateli by se mi mohlo hodit zobrazit rozvrh učebny, abych věděl, kdy můžu do učebny přijít nebo jaké přednášky se tam můžu účastnit.
-- Jako uživatel si potřebuju zobrazit rozvrh jiného učitele, abych věděl, kdy se s ním můžu sejít.
+- Jako student nebo učitel potřebuju zobrazit rozvrh jiného učitele, abych věděl, kdy se s ním můžu sejít.
+- Jako rozvrhová komise potřebujeme zobrazit rozvrh jakéhokoli učitele, abychom věděli, jestli jsme k rozvrhovým lístkům přiřadili správné učitele.
 
 Michael
 - Jako student si musím být schopen zobrazit rozvrh předmětu, abych si mohl vybrat pro mě vhodnou paralelku přednášky či konkrétní vhodné cvičení.
 - Jako student si musím být schopen zobrazit rozvrh rozvrhového lístku, abych se mohl rozhodnout zda mi vyhovuje.
-- Jako student bych měl mít možnost nechat si zasílat upozornění na změnu ve výuce, abych věděl, že kdy a kam mám přijít.
-- Jako děkanát si musím být schopný zobrazit rozvrh předmětu, abych mohl kontrolovat, zda probíhá výuka.
+- Jako student bych měl mít možnost nechat si zasílat upozornění na změnu ve výuce, abych věděl, kdy a kam mám přijít.
+- Jako děkanát si musíme být schopni zobrazit rozvrh předmětu, abychom mohli kontrolovat, zda probíhá výuka.
+- Jako rozvrhová komise si musíme být schopni zobrazit rozvrh předmětu, abychom mohli kontrolovat, jestli jsme rozvrhové lístky naplánovali na dostatečné množství různých termínů.
 - Jako rozvrhová komise si musíme být schopni zobrazit rozvrh rozvrhového lístku, abychom mohli zkontrolovat, že daný rozvrhový lístek dává smysl (jednotlivé části se nepřekryjí atd.).
 - Jako učitel potřebuji mít možnost zrušit svou výuku v daném termínu, abych dal vědět účastníkům výuky, že se nemusí dostavit.
 - Jako děkanát bychom měli mít možnost si nechat automaticky vygenerovat statický report o vytížení místností v jednotlivých semestrech, abychom mohli dělat orgranizační rozhodnutí na základě těchto dat (úprava vytápění místností, zajištění nových prostor atd.).
@@ -71,49 +72,59 @@ Michael
 
 [*Document here your system requirements as use case diagrams.*]
 
-Ondřej
-
-⋮
-
-Marek
-
-⋮
-
-Šimon
-
-⋮
-
-Michael
-
+Zobrazení rozvrhu
 ```plantuml
 @startuml
 left to right direction
 
 '======== Actors ========
 actor Student
+actor "Student nebo učitel" as SU
 actor Děkanát
 actor "Rozvrhová komise" as RK
 
 '======== Use Cases ========
 package "Modul rozvrhy" {
-  Package Předměty {
-    usecase "Zobrazit si rovrh předmětu" as UCP1
-    usecase "Zobrazit si rozvrh rozvrhového lístku" as UCP2
+  Package "Zobrazení rozvrhu" {
+    usecase "Zobrazit rovrh předmětu" as UCP1
+    usecase "Zobrazit rozvrh rozvrhového lístku" as UCP3
+    usecase "Zobrazit rozvrh jakéhokoli profesora" as UCP4
+    usecase "Zobrazit svůj rozvrh" as UCP2
   }
+}
 
+'======== Use case links ========
+Student --> UCP1
+SU --> UCP2
+SU --> UCP3
+SU --> UCP4
+
+'Right hand side
+UCP1 <-- Děkanát
+UCP4 <-- RK
+UCP3 <-- RK
+UCP1 <-- RK
+@enduml
+```
+
+Výstupy
+```plantuml
+@startuml
+left to right direction
+
+'======== Actors ========
+actor Děkanát
+actor "Rozvrhová komise" as RK
+
+'======== Use Cases ========
+package "Modul rozvrhy" {
   Package Výstupy {
     usecase "Vytvoření reportu o využití místností" as UCV1
   }
 }
 
 '======== Use case links ========
-Student --> UCP1
-Student --> UCP2
-Děkanát --> UCP1
-Děkanát --> UCV1
-
-'Right hand side
-UCP2 <-- RK
+UCV1 <-- Děkanát
 UCV1 <-- RK
 @enduml
 ```
