@@ -18,11 +18,13 @@ Rozvrhový lístek = základní jednotka rovržení výuky předmětu, určuje �
 lístek je vytvořen pro každý předmět, který se vyučuje v daném semestru.
 
 ### Uživatelské požadavky
-Každý opravit svých 5 uživatelský požadavků.
+**TODO:**
 
-Vybrat si 2 uživatelké požadavky/skupiny požadavků (viz Markovy poznámky na messengeru) a zabrat si je připsáním jména k požadavku.
+- Každý opravit svých 5 uživatelský požadavků.
 
-Rozepsat požadavky do use casů (z toho dva detailně) a případně specifikovat entity s atributy (viz poznámky).
+- Vybrat si 2 uživatelké požadavky/skupiny požadavků (viz Markovy poznámky na messengeru) a zabrat si je připsáním jména k požadavku.
+
+- Rozepsat požadavky do use casů (z toho dva detailně) a případně specifikovat entity s atributy (viz poznámky).
 
 
 Ondřej
@@ -64,18 +66,19 @@ Marek
 - Systém provede kontrolu, že v učebně nejsou dva termíny ve stejnou dobu.
 
 Šimon
-- Systém provede kontrolu, že doporučený průběh studia odpovídá prerekvizitám.
+- Jako rozvrhová komise potřebujeme automatickou kontrolu, že doporučený průběh studia odpovídá prerekvizitám, abychom věděli, jestli jsme doporučený rozvrh navrhli tak, aby studenti byli schopni ho použít.
 
-- Systém by měl umožnit export rozvrhů.
-- Student by měl být schopen zobrazit si svůj rozvrh podle zapsaných předmětů.
-- Uživatel by měl být schopen si zobrazit rozvrh učebny.
-- Uživatel by měl být schopen zobrazit si rozvrh učitele.
+- Jako student nebo učitel potřebuju exportovat svůj rozvrh, abych si ho mohl dát do kalendáře.
+- Jako student nebo učitel potřebuju zobrazit svůj rozvrh, abych věděl, kdy a kde mám být.
+- Jako student nebo učitel potřebuju zobrazit rozvrh jiného učitele, abych věděl, kdy se s ním můžu sejít.
+- Jako rozvrhová komise potřebujeme zobrazit rozvrh jakéhokoli učitele, abychom věděli, jestli jsme k rozvrhovým lístkům přiřadili správné učitele.
 
 Michael
 - Jako student si musím být schopen zobrazit rozvrh předmětu, abych si mohl vybrat pro mě vhodnou paralelku přednášky či konkrétní vhodné cvičení.
 - Jako student si musím být schopen zobrazit rozvrh rozvrhového lístku, abych se mohl rozhodnout zda mi vyhovuje.
-- Jako student bych měl mít možnost nechat si zasílat upozornění na změnu ve výuce, abych věděl, že kdy a kam mám přijít.
-- Jako děkanát si musím být schopný zobrazit rozvrh předmětu, abych mohl kontrolovat, zda probíhá výuka.
+- Jako student bych měl mít možnost nechat si zasílat upozornění na změnu ve výuce, abych věděl, kdy a kam mám přijít.
+- Jako děkanát si musíme být schopni zobrazit rozvrh předmětu, abychom mohli kontrolovat, zda probíhá výuka.
+- Jako rozvrhová komise si musíme být schopni zobrazit rozvrh předmětu, abychom mohli kontrolovat, jestli jsme rozvrhové lístky naplánovali na dostatečné množství různých termínů.
 - Jako rozvrhová komise si musíme být schopni zobrazit rozvrh rozvrhového lístku, abychom mohli zkontrolovat, že daný rozvrhový lístek dává smysl (jednotlivé části se nepřekryjí atd.).
 - Jako učitel potřebuji mít možnost zrušit svou výuku v daném termínu, abych dal vědět účastníkům výuky, že se nemusí dostavit.
 - Jako děkanát bychom měli mít možnost si nechat automaticky vygenerovat statický report o vytížení místností v jednotlivých semestrech, abychom mohli dělat orgranizační rozhodnutí na základě těchto dat (úprava vytápění místností, zajištění nových prostor atd.).
@@ -131,46 +134,71 @@ uložení učebny při výstupu z podsekce `List evidence učebny` selže.
 **Stav systému po dokončení operace**
 Nově vytvořená učebna je v systému úspěšně evidovaná a `děkanát` si ji může zobrazit v seznamu všech učeben.
 Pokud data byla při opouštění sekce `List evidence učebny` nevalidní učebna není v systému evidována.
+Managování předmětů (takové to vytvořit+smazat+upravit + ještě doporučený rozvrh + prerekvizity)
 
-Marek
 
-⋮
+Managování míst
 
-Šimon
 
-⋮
+Harmonogram (harmonogram rozvrhovou komisí + když profesor zruší předmět v 1 den)
 
-Michael
 
+Automatické kontroly
+
+
+Zobrazení rozvrhu
 ```plantuml
 @startuml
 left to right direction
 
 '======== Actors ========
 actor Student
+actor "Student nebo učitel" as SU
 actor Děkanát
 actor "Rozvrhová komise" as RK
 
 '======== Use Cases ========
 package "Modul rozvrhy" {
-  Package Předměty {
-    usecase "Zobrazit si rovrh předmětu" as UCP1
-    usecase "Zobrazit si rozvrh rozvrhového lístku" as UCP2
+  Package "Zobrazení rozvrhu" {
+    usecase "Zobrazit rovrh předmětu" as UCP1
+    usecase "Zobrazit rozvrh rozvrhového lístku" as UCP3
+    usecase "Zobrazit rozvrh jakéhokoli profesora" as UCP4
+    usecase "Zobrazit svůj rozvrh" as UCP2
   }
+}
 
+'======== Use case links ========
+Student --> UCP1
+SU --> UCP2
+SU --> UCP3
+SU --> UCP4
+
+'Right hand side
+UCP1 <-- Děkanát
+UCP4 <-- RK
+UCP3 <-- RK
+UCP1 <-- RK
+@enduml
+```
+
+Výstupy (export, statistika atd...)
+```plantuml
+@startuml
+left to right direction
+
+'======== Actors ========
+actor Děkanát
+actor "Rozvrhová komise" as RK
+
+'======== Use Cases ========
+package "Modul rozvrhy" {
   Package Výstupy {
     usecase "Vytvoření reportu o využití místností" as UCV1
   }
 }
 
 '======== Use case links ========
-Student --> UCP1
-Student --> UCP2
-Děkanát --> UCP1
-Děkanát --> UCV1
-
-'Right hand side
-UCP2 <-- RK
+UCV1 <-- Děkanát
 UCV1 <-- RK
 @enduml
 ```
