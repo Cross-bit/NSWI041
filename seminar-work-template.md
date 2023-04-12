@@ -34,6 +34,7 @@ Ondřej
 
 4) Děkanát by měl být schopen specifikovat příslušnost předmětu do studijního programu a prerekvizity, korekvizity... předmětu, aby studenti při zápisu věděli, zdali mají již všechny potřebné znalosti pro tento předmět.
 
+##TODO: Use case pro 5, 6, 7? 
 5) Rozvrhová komise by měla být schopna vytvořit rozvhový lístek, aby se studenti mohli na daný předmět zapsat.
 
 6) Rozvrhová komise by měla být schopna smazat rozvhový lístek, aby se studenti na příslušný předmět nemohli zapisovat, pokud dojde ke zrušení předmětu, ke kterému je tento lístek určen.
@@ -86,18 +87,25 @@ Michael
 
 ### Ondřej
 
-**Děkanát, tvorba, úprava a odstranění předmětů (1, 2, 3)**
+#### Use case scenario: Vytvoření předmětu děkanátem
 
-```plantuml
-@startuml  Děkanát
-left to right direction
+**Precondition**
+`Uživatel` je přihlášen jako člen děkanátu a je v podsekci modulu rozvrhy
+`Předměty`.
 
-'======== Actors ========
-actor Student
-actor Děkanát
+**Normal**
+1. `Uživatel` zvolí možnost `Upravit existující předmět` a otevře se mu subsekce (formulář) pro tvorbu nového předmětu – `Nový předmět`.
+2. `Uživatel` v rámci tvorby dá předmětu název a vyplní další pvinné informace.TODO: přidat do diagramu (název semestr atd.??)??
+3. Když uživatel zadá hodnotu, provede se kontrola vstupu.
+4. V rámci vyplňování `uživatel` přiřadí předmět do konkrétních studijních programů.
+5. `Uživatel` může u předmětu specifikovat prerekvizity a korekvizity z nabídky existujících předmětů.
+  
+**Alternativní scénáře**
+- Pokud dojde při validaci povinných dat k chybě uživatel je na tuto chybu upozorněn a vyzván k opravě.
+- Pokud jsou všechna pole validní a uživatel opustí podsekci `Nový předmět`, předmět je přidán do systému.
 
-
-```
+**Stav systému po dokončení operace**
+Nově vytvořená učebna je v systému úspěšně evidovaná a `uživatel` si ji může zobrazit v seznamu všech učeben v sekci `Předměty`
 
 
 #### Use case scenario: Evidence učebny děkanátem
@@ -123,7 +131,6 @@ uložení učebny při výstupu z podsekce `List evidence učebny` selže.
 **Stav systému po dokončení operace**
 Nově vytvořená učebna je v systému úspěšně evidovaná a `děkanát` si ji může zobrazit v seznamu všech učeben.
 Pokud data byla při opouštění sekce `List evidence učebny` nevalidní učebna není v systému evidována.
-
 
 Marek
 

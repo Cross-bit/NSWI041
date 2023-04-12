@@ -40,21 +40,10 @@ Děkanát --> UC8
 
 UC4 <-- RK
 
-'RK --> UC3
 UC3 .> UC2 : << includes >>
 UC3 .> UC1 : << includes >>
 
 UC8 .> UC2 : << extends >>
 UC8 .> UC1 : << extends >>
-
-'UC2 <. UC8: << includes >>
-'UC3 <. UC8 : << includes >>
-'UC4 <. UC8 : << includes >>
-'UC5 <. UC8 : << includes >>
-
-'UC1 .> UC2 : << includes >>
-'
-'UC6 <-- Teacher
-'UC7 <-- Student
 
 }

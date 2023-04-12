@@ -1,0 +1,44 @@
+@startuml Děkanát
+left to right direction
+
+'======== Actors ========
+actor Děkanát
+actor Student
+
+'======== Use Cases ========
+package "Modul rozvrhy" {
+  Package Předměty {
+    usecase "Vytvořit nový předmět" as UCP1
+    usecase "Upravit existující předmět" as UCP2
+    usecase "Smazat existující předmět" as UCP3
+    usecase "Zobrazit předměty" as UCP4
+
+    Package "Nový předmět" {
+      usecase "Specifikovat příslušnost do programů" as UCP5
+      usecase "Specifikovat prerekvizity" as UCP6
+      usecase "Specifikovat korekvizity" as UCP7
+    }
+  }
+
+'======== Use case links ========
+UCP1 .> UCP5 : << includes >>
+UCP1 .> UCP6 : << includes >>
+UCP1 .> UCP7 : << includes >>
+
+'UCP2 <.left. UCP5 : << extends >>
+'UCP6 <.left. UCP2 : << extends >>
+'UCP7 <.left. UCP2 : << extends >>
+
+Děkanát -left-> UCP1
+Děkanát --> UCP2
+Děkanát --> UCP3
+Děkanát --> UCP5
+Děkanát --> UCP4
+
+UCP4 .left.> UCP6 : << includes >>
+UCP4 .left.> UCP5 : << includes >>
+
+UCP4 <-- Student
+'TODO: remove?
+
+}
