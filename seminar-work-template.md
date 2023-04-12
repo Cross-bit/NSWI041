@@ -72,6 +72,18 @@ Michael
 
 [*Document here your system requirements as use case diagrams.*]
 
+Managování předmětů (takové to vytvořit+smazat+upravit + ještě doporučený rozvrh + prerekvizity)
+
+
+Managování míst
+
+
+Harmonogram (harmonogram rozvrhovou komisí + když profesor zruší předmět v 1 den)
+
+
+Automatické kontroly
+
+
 Zobrazení rozvrhu
 ```plantuml
 @startuml
@@ -107,7 +119,7 @@ UCP1 <-- RK
 @enduml
 ```
 
-Výstupy
+Výstupy (export, statistika atd...)
 ```plantuml
 @startuml
 left to right direction
