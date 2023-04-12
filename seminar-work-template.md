@@ -50,12 +50,12 @@ Marek
 - Systém provede kontrolu, že v učebně nejsou dva termíny ve stejnou dobu.
 
 Šimon
-- Systém provede kontrolu, že doporučený průběh studia odpovídá prerekvizitám.
+- Jako rozvrhová komise potřebujeme automatickou kontrolu, že doporučený průběh studia odpovídá prerekvizitám, abychom věděli, jestli jsme doporučený rozvrh navrhli tak, aby studenti byli schopni ho použít.
 
-- Systém by měl umožnit export rozvrhů.
-- Student by měl být schopen zobrazit si svůj rozvrh podle zapsaných předmětů.
-- Uživatel by měl být schopen si zobrazit rozvrh učebny.
-- Uživatel by měl být schopen zobrazit si rozvrh učitele.
+- Jako student nebo učitel potřebuju exportovat svůj rozvrh, abych si ho mohl dát do kalendáře.
+- Jako student nebo učitel potřebuju zobrazit svůj rozvrh, abych věděl, kdy a kde mám být.
+- Jako uživateli by se mi mohlo hodit zobrazit rozvrh učebny, abych věděl, kdy můžu do učebny přijít nebo jaké přednášky se tam můžu účastnit.
+- Jako uživatel si potřebuju zobrazit rozvrh jiného učitele, abych věděl, kdy se s ním můžu sejít.
 
 Michael
 - Jako student si musím být schopen zobrazit rozvrh předmětu, abych si mohl vybrat pro mě vhodnou paralelku přednášky či konkrétní vhodné cvičení.
