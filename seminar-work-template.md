@@ -61,12 +61,13 @@ Marek
   - Všichni věděli, kdy začíná a končí výuka, zkoušková období, kdy jsou prázdniny.
   - Systém věděl, kdy má zobrazovat jaký rozvrh.
 
+// TODO: Vytvořil jsem diagram na kontroly a rovnou jsem tam dal všechny. Aktuální formulace těchto user stories není jednoznačná, tak se mrkni na diagram a nějak to sjednoť.
 - Systém provede kontrolu, že učitel může navštěvovat všechny termíny jeho výuky.
 - Systém provede kontrolu, že studenti mohou navštěvovat všechny termíny na povinné předměty.
 - Systém provede kontrolu, že v učebně nejsou dva termíny ve stejnou dobu.
 
 Šimon
-- Jako rozvrhová komise potřebujeme automatickou kontrolu, že doporučený průběh studia odpovídá prerekvizitám, abychom věděli, jestli jsme doporučený rozvrh navrhli tak, aby studenti byli schopni ho použít.
+- Jako děkanát potřebujeme automatickou kontrolu, že doporučený průběh studia odpovídá prerekvizitám, abychom věděli, jestli jsme doporučený rozvrh navrhli tak, aby studenti byli schopni ho použít.
 
 - Jako student nebo učitel potřebuju exportovat svůj rozvrh, abych si ho mohl dát do kalendáře.
 - Jako student nebo učitel potřebuju zobrazit svůj rozvrh, abych věděl, kdy a kde mám být.
@@ -144,6 +145,34 @@ Harmonogram (harmonogram rozvrhovou komisí + když profesor zruší předmět v
 
 
 Automatické kontroly
+```plantuml
+@startuml
+left to right direction
+
+'======== Actors ========
+actor Student
+actor Učitel
+actor Děkanát
+actor "Rozvrhová komise" as RK
+
+'======== Use Cases ========
+package "Modul rozvrhy" {
+  Package "Automatické kontroly" {
+    usecase "Kontrola doporučeného průběhu studia" as UC1
+    usecase "Kontrola kolizí svého rozvrhu" as UC2
+    usecase "Kontrola kolizí rozvrhu učebny" as UC3
+  }
+}
+
+'======== Use case links ========
+Student --> UC2
+Učitel --> UC2
+
+'Right hand side
+UC1 <-- Děkanát
+UC3 <-- RK
+@enduml
+```
 
 
 Zobrazení rozvrhu
@@ -192,14 +221,20 @@ actor "Rozvrhová komise" as RK
 
 '======== Use Cases ========
 package "Modul rozvrhy" {
-  Package Výstupy {
-    usecase "Vytvoření reportu o využití místností" as UCV1
+  Package Reporty {
+    usecase "Vytvoření reportu o využití místností" as UCA1
+  }
+  Package Exporty {
+    usecase "Export svého rozvrhu" as UCB1
   }
 }
 
 '======== Use case links ========
-UCV1 <-- Děkanát
-UCV1 <-- RK
+Student --> UCB1
+Učitel --> UCB1
+
+UCA1 <-- Děkanát
+UCA1 <-- RK
 @enduml
 ```
 
