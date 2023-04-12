@@ -1,0 +1,60 @@
+@startuml Evidence učeben
+left to right direction
+
+'======== Actors ========
+actor Děkanát
+actor "Rozvrhová komise" as RK
+
+'======== Use Cases ========
+package "Modul rozvrhy" {
+
+
+    Package "Evidence učeben a míst" { 
+
+        Package "List evidence učebny" {
+            usecase "Evidovat učebnu k místu" as UC1
+            usecase "Vytvořit nový záznam učebny" as UC3
+            usecase "Specifikovat kapacitu učebny" as UC2
+            usecase "Zobrazit seznam učeben" as UC4
+        }
+
+        Package "List evidence místa" {
+            usecase "Vytvořit nové místo" as UC5
+            usecase "Upravit exisutjící místo" as UC6            
+            usecase "Smazat místo" as UC7
+        }
+
+        usecase "Kontrola vstupních údajů" as UC8
+    }
+
+'======== Use case links ========
+Děkanát --> UC3
+Děkanát --> UC4
+
+Děkanát --> UC2
+
+Děkanát --> UC5
+Děkanát --> UC6
+Děkanát --> UC7
+Děkanát --> UC8
+
+UC4 <-- RK
+
+'RK --> UC3
+UC3 .> UC2 : << includes >>
+UC3 .> UC1 : << includes >>
+
+UC8 .> UC2 : << extends >>
+UC8 .> UC1 : << extends >>
+
+'UC2 <. UC8: << includes >>
+'UC3 <. UC8 : << includes >>
+'UC4 <. UC8 : << includes >>
+'UC5 <. UC8 : << includes >>
+
+'UC1 .> UC2 : << includes >>
+'
+'UC6 <-- Teacher
+'UC7 <-- Student
+
+}

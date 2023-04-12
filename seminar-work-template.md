@@ -26,26 +26,28 @@ Rozepsat požadavky do use casů (z toho dva detailně) a případně specifikov
 
 
 Ondřej
-- Děkanát potřebuje mít možnost vytvořit předmět, aby rozvrhová komise mohla vytvořit rozvrhové lístky danému předmětu.
+1) Děkanát potřebuje mít možnost vytvořit předmět, aby rozvrhová komise mohla vytvořit rozvrhové lístky danému předmětu.
 
-- Děkanát potřebuje mít možnost upravit předmět, aby pokud dojde ke změnám v daném předmětu(např. změna názvu), rozvrhová komise pracovala s aktuálními daty.
+2) Děkanát potřebuje mít možnost upravit předmět, aby pokud dojde ke změnám v daném předmětu(např. změna názvu), rozvrhová komise pracovala s aktuálními daty.
 
-- Děkanát potřebuje mít možnost smazat předmět, aby pokud se daný předmět zruší, nebyl již v systému dále registrovaný a rozvrhová komise k tomuto předmětu nevytvářela rozvrhové lístky.
+3) Děkanát potřebuje mít možnost smazat předmět, aby pokud se daný předmět zruší, nebyl již v systému dále registrovaný a rozvrhová komise k tomuto předmětu nevytvářela rozvrhové lístky.
 
-- Děkanát by měl být schopen specifikovat příslušnost předmětu do studijního programu a prerekvizity, korekvizity... předmětu, aby studenti při zápisu věděli, zdali mají již všechny potřebné znalosti pro tento předmět.
+4) Děkanát by měl být schopen specifikovat příslušnost předmětu do studijního programu a prerekvizity, korekvizity... předmětu, aby studenti při zápisu věděli, zdali mají již všechny potřebné znalosti pro tento předmět.
 
-- Rozvrhová komise by měla být schopna vytvořit rozvhový lístek, aby se studenti mohli na daný předmět zapsat.
+5) Rozvrhová komise by měla být schopna vytvořit rozvhový lístek, aby se studenti mohli na daný předmět zapsat.
 
-- Rozvrhová komise by měla být schopna smazat rozvhový lístek, aby se studenti na příslušný předmět nemohli zapisovat, pokud dojde ke zrušení předmětu, ke kterému je tento lístek určen.
+6) Rozvrhová komise by měla být schopna smazat rozvhový lístek, aby se studenti na příslušný předmět nemohli zapisovat, pokud dojde ke zrušení předmětu, ke kterému je tento lístek určen.
 
-- Rozvrhová komise by měla být schopna upravit rozvhový lístek, aby pokud vznikne při vytváření lístku chyba v obsahu, mohl být lístek upraven a studenti měli aktuální platná data.
+7) Rozvrhová komise by měla být schopna upravit rozvhový lístek, aby pokud vznikne při vytváření lístku chyba v obsahu, mohl být lístek upraven a studenti měli aktuální platná data.
 
-- Děkanát by měl být schopen zaevidovat, smazat, upravit místo (areál ve kterém výuka bude probíhat), aby:
+8) Děkanát by měl být schopen zaevidovat, smazat, upravit místo (areál ve kterém výuka bude probíhat), aby:
    - Se mohla k místu přiřadit učebna a provést kontrala návaznosti rovržení výuky
    - Studenti a učitelé věděli, kam se mají dostavit na výuku.
    - Rozvrhová komise mohla dát předměty pro stejný studijní program a semestr na jedno místo.
 
-- Děkanát by měl být schopen zaevidovat do systému učebnu, tj. přiradit ji k místu a specifikovat její kapacitu, aby mohla být přidělena k jednotlivým rozvrhovým lístkům a studenti a učitelé věděli kde budou mít výuku.
+9) Děkanát by měl být schopen zobrazit seznam všech učeben, aby věděl jaké učebny a k jakým místům eviduje.
+
+10)  Děkanát by měl být schopen zaevidovat do systému učebnu, tj. přiradit ji k místu a specifikovat její kapacitu, aby ji rozvrhová komise mohla přidělit jednotlivým rozvrhovým lístkům a studenti a učitelé věděli kde budou mít výuku.
 
 Marek
 - Děkanát by měl být schopen specifikovat průběh doporučeného průběhu studia, aby:
@@ -82,9 +84,46 @@ Michael
 
 [*Document here your system requirements as use case diagrams.*]
 
-Ondřej
+### Ondřej
 
-⋮
+**Děkanát, tvorba, úprava a odstranění předmětů (1, 2, 3)**
+
+```plantuml
+@startuml  Děkanát
+left to right direction
+
+'======== Actors ========
+actor Student
+actor Děkanát
+
+
+```
+
+
+#### Use case scenario: Evidence učebny děkanátem
+**Precondition**
+
+Uživatel je přihlášen jako člen děkanátu a systému eviduje `místo`, člen otevřel sekci Evidence učeben a míst v modulu rozvrhy.
+
+**Normal**
+1. `Děkanát` zadá pokyn vytvoření nového záznamu učebny.
+2. `Děkanát` specifikuje kapacitu učebny.
+3. Provede se kontrola vstupních údajů případně `děkanát` může kdykoliv tuto kontrolu provést manuálně pomocí možnosti `Kontrola vstupních údajů`.
+4. `Děkanát` zadá evidovat učebnu k místu a přidá existující místo z nabídky, kterou mu systém poskytne.
+5. Opět se provede kontrola vstupních údajů zdali místo bylo vyplněno.
+6. Uživatel opustí podsekci `List evidence učebny`.
+
+
+**Alternativní scénáře**
+- Uživatel zadá do kapacity učebny nesprávnou hodnotu(obsahuje např. text) a při kontrole je informován o neplatnosti zadaných údajů. Uživatel může chybu opravit zadáním kapacity ve správném formátu.
+- Uživatel chce k učebně přiřadit místo, ale to v systému neexistuje. Uživatel tedy před zadáním místnosti musí tuto místnost vytvořit.
+- Pokdu nejsou všechna data vyplněna, nebo vstupy obasahují neplatná data,
+uložení učebny při výstupu z podsekce `List evidence učebny` selže.
+
+**Stav systému po dokončení operace**
+Nově vytvořená učebna je v systému úspěšně evidovaná a `děkanát` si ji může zobrazit v seznamu všech učeben.
+Pokud data byla při opouštění sekce `List evidence učebny` nevalidní učebna není v systému evidována.
+
 
 Marek
 
