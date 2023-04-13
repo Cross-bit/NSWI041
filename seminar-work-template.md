@@ -60,6 +60,24 @@ Ondřej
 - Jako student nebo učitel potřebuju zobrazit rozvrh jiného učitele, abych věděl, kdy se s ním můžu sejít.
 - Jako rozvrhová komise potřebujeme zobrazit rozvrh jakéhokoli učitele, abychom věděli, jestli jsme k rozvrhovým lístkům přiřadili správné učitele.
 
+Marek
+- Jako děkanát potřebujeme být schopni specifikovat průběh doporučeného průběhu studia, aby studenti:
+  - věděli, ve kterých semestrech si mají zapsat jaké předměty
+  - měli splněné prerekvizity a byli schopni lépe splnit všechny požadavky.
+Dále je to potřebné, aby rozvrhová komise věděla, které kombinace předmětů bude mít většina studentů zapsané ve stejném semestru a mohla je dát na různá místa v rozvrhu.
+
+- Jako děkanát chceme být schopni specifikovat harmonogram, aby:
+  - Všichni uživatele věděli:
+    - kdy začíná a končí výuka
+    - zkoušková období
+    - kdy jsou prázdniny
+    - Kdy se mají provést automatické kontroly
+  - Systém věděl, kdy má zobrazovat jaký rozvrh.
+
+- Systém provede kontrolu, aby učitel mohol navštěvovat všechny termíny jeho výuky.
+- Systém provede kontrolu, aby studenti mohli navštěvovat všechny termíny na povinné předměty.
+- Systém provede kontrolu, aby v učebně neboli dva termíny ve stejnou dobu.
+
 Michael
 - Jako student si musím být schopen zobrazit rozvrh předmětu, abych si mohl vybrat pro mě vhodnou paralelku přednášky či konkrétní vhodné cvičení.
 - Jako student si musím být schopen zobrazit rozvrh rozvrhového lístku, abych se mohl rozhodnout zda mi vyhovuje.
