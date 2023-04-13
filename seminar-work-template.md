@@ -52,19 +52,213 @@ Ondřej
 
 10)  Děkanát by měl být schopen zaevidovat do systému učebnu, tj. přiradit ji k místu a specifikovat její kapacitu, aby ji rozvrhová komise mohla přidělit jednotlivým rozvrhovým lístkům a studenti a učitelé věděli kde budou mít výuku.
 
-Marek
-- Děkanát by měl být schopen specifikovat průběh doporučeného průběhu studia, aby:
-  - Studenti věděli, ve kterých semestrech si mají zapsat jaké předměty, aby měli splněné prerekvizity a byli schopni lépe splnit všechny požadavky.
-  - Rozvrhová komise věděla, které kombinace předmětů bude mít většina studentů zapsané ve stejném semestru a mohla je dát na různá místa v rozvrhu.
+### Marek
 
-- Děkanát by měl být schopen specifikovat harmonogram, aby:
-  - Všichni věděli, kdy začíná a končí výuka, zkoušková období, kdy jsou prázdniny.
-  - Systém věděl, kdy má zobrazovat jaký rozvrh.
+#### Use case scenario: Specifikace (vytvoření) průběhu doporučeného průběhu studia
 
-// TODO: Vytvořil jsem diagram na kontroly a rovnou jsem tam dal všechny. Aktuální formulace těchto user stories není jednoznačná, tak se mrkni na diagram a nějak to sjednoť.
-- Systém provede kontrolu, že učitel může navštěvovat všechny termíny jeho výuky.
-- Systém provede kontrolu, že studenti mohou navštěvovat všechny termíny na povinné předměty.
-- Systém provede kontrolu, že v učebně nejsou dva termíny ve stejnou dobu.
+**Hlavní aktér:** `Děkanát`
+**Cíl:** Navrhnout doporučený průběh studia pro studenty s ohledem na prerekvizity a požadavky studijního programu.
+
+**Precondition**
+- `Uživatel` je přihlášen jako člen děkanátu a je v podsekci modulu rozvrhy
+`Doporučené průběhy`.
+- Informace o prerekvizitách a požadavcích studijního programu jsou dostupné.
+
+**Normální scénář**
+1. `Děkanát` otevře sekci pro vytvoření doporučeného průběhu studia.
+2. Systém zobrazí všechny studijní programy
+3. Děkanát vybere studijní program, pro který chce vytvořit doporučený průběh studia.
+4. Software získá seznam předmětů a informace o prerekvizitách z databáze nebo systému spravujícího studijní plány. Informace o všech předmětech jsou zobrazeny spolu s ich prerekvizitami formou grafu nebo běžného seznamu.
+5. `Děkanát` analyzuje jednotlivé předměty a jejich prerekvizity, aby zjistil, v jakém pořadí je studenti musí absolvovat.
+6. `Děkanát` zohlední požadavky studijního programu, jako je minimální a maximální počet kreditů, povinné předměty, volitelné předměty a další specifické požadavky.
+7. `Děkanát` navrhne doporučený průběh studia pomocí grafického rozhraní, které umožňuje přetahování předmětů z listu nebo grafu do jednotlivých semestrů a automaticky kontroluje splnění prerekvizit a požadavků studijního programu. Akonáhle je předmět už umístěn v nejakém semestru, v listu (nebo grafu), ze kterého byl přetáhnutý je vyšednutý a druhýkrát se už přetáhnut nedá.
+8. Počas přetahování předmětů jsou předměty neustále kontrolovány na prerekvizity. Akonáhle je předmět umístnený bez prerekvizit, uživatel je patrične upozornen.
+9. Po navržení doporučeného průběhu studia grafické rozhraní zobrazí děkanátu přehledný plán s jednotlivými semestry a přiřazenými předměty.
+10. `Děkanát` zkontroluje navržený průběh studia s ohledem na splnění všech požadavků a prerekvizit.
+11. `Děkanát` potvrdí návrh doporučeného průběhu studia v systému pomocí tlačítka `"Uložit"`.
+12. Systém uloží doporučený průběh studia.
+13. Po uložení se uživateli zobrazí možnost `"editovat"`, `"zveřejnit"` nebo `"zmazat"`studijní plán.
+14. Po kliknutí na zveřejnit se studijní plán zveřejní pro studenty.
+
+**Alternativní scénář:**
+
+4. `Děkanát` zjistí, že některé informace o prerekvizitách nebo požadavcích studijního programu chybí nebo jsou neaktuální:
+- `Děkanát` aktualizuje chybějící nebo neaktuální informace přímo v grafickém rozhraní a pokračuje v kroku `4` normálního scénáře.
+
+9. `Děkanát` zjistí, že navržený průběh studia nesplňuje všechny požadavky nebo prerekvizity:
+- `Děkanát` upraví doporučený průběh studia přímo v grafickém rozhraní. Poté pokračuje v kroku `9` normálního scénáře.
+
+**Stav systému po dokončení operace:**
+
+- Systém obsahuje aktualizovaný, případně zveřejněný doporučený průběh studia, který splňuje všechny požadavky a prerekvizity studijního programu.
+- Studenti mají přístup k doporučenému průběhu studia přes systém, který jim pomáhá plánovat a organizovat své studium.
+- Děkanát může v případě potřeby snadno aktualizovat libovolný doporučený průběh studia pro libovolný studijní program.
+
+```plantuml
+@startuml
+left to right direction
+
+actor "Děkanát" as Dekanat
+actor "Student" as Student
+
+package "Modul rozvrhy" {
+  package "Vytvoření doporučeného průběhu studia" {
+    usecase "Zvolení studijního programu" as UC1
+    usecase "Vytvoření doporučeného průběhu studia" as UC2
+    usecase "Přidávaní predmětů programu do semestrov studia" as UC3
+    usecase "Kontrolování prerekvizit predmětů" as UC4
+    usecase "Uložení doporučeného průběhu studia" as UC5
+    usecase "Zveřejnit doporučeného průběhu studia" as UC6
+    usecase "Zobrazit doporučený průběh studia" as UC7
+  }
+}
+
+Dekanat --> UC1
+Dekanat --> UC2
+Dekanat --> UC3
+Dekanat --> UC4
+Dekanat --> UC5
+Dekanat --> UC6
+
+UC7 <-- Student
+
+@enduml
+```
+
+#### Use case scenario: Specifikace harmonogramu
+
+**Hlavní aktér:** `Děkanát`
+**Cíl:** Navrhnout harmonogram akademického roku pro studenty, vyučující a ostatní zaměstnance školy s ohledem na začátek a konec výuky, zkoušková období a prázdniny.
+
+**Precodition**
+- Uživatel je přihlášen jako člen děkanátu, má přístup k modulu rozvrhů a je v podsekci `Doporučené průběhy`.
+- Systém umožňuje zadávat a ukládat informace o harmonogramu akademického roku.
+
+**Normální scénář**
+1. `Děkanát` otevře sekci pro specifikaci harmonogramu v modulu rozvrhů, kliknutím na tlačítko `"Harmonogramy"`.
+2. Systém zobrazí list všech už specifikovaných harmonogramů pro jednotlivé roky. Uživatel si může vyfiltrovat jenom nadcházející roky. Nad listom harmonogramů je tlačítko pro vytvoření nového harmonogramu.
+3. `Děkanát` zvolí vytvoření nového harmonogramu.
+4. Systém zobrazí interaktivní formulář, který umožňuje zadávat data začátku a koncu semestrů, zkouškových období a prázdnin. Takisto se zobrazí možnost vybrat datumy, kdy se provedou automatické kontroly.
+5. Po zadání dat probehně kontrola, zda jsou data správně zadaná a nejsou v rozporu s předpisy školy nebo zákonem.
+6. Pokud jsou data správně zadána, `Děkanát` uloží harmonogram pomocí tlačítka `"Uložit"`. Takýto harmonogra je zatím přístupný jenom `Děkanátu`.
+7. Systém uloží harmonogram a zobrazí potvrzení o úspěšném uložení.
+8. Po uložení se uživateli zobrazí možnost `"editovat"`, `"zveřejnit"` nebo `"zmazat"` harmonogram.
+9. Po zvolení `"zveřejnit"` se tento harmonogram stane volne dostupným pro přihlášených použivatelů.
+
+**Alternativní scénář:**
+6. Po uložení harmonogramu si děkanát uvědomí, že potřebuje provést další úpravy:
+- `Děkanát` se vrátí zpět do sekce pro specifikaci harmonogramu, upraví harmonogram podle potřeby a znovu ho uloží, následuje krok `6` normálniho scénáře.
+7. Uživatel chce vytvořit harmonogram který se datumami už překrývá s jiným již vytvořeným harmonogramem. Nebo je nekterá kombinace datumů nesprávná ( napr. konec semestru je dřív než začátek ). Systém ho na tento problém upozorní a následuje krok `5` normálniho scenáře.
+
+**Stav systému po dokončení operace:**
+- Systém obsahuje uložený, případně aktualizovaný harmonogram akademického roku, který zohledňuje výuku, zkoušková období a prázdniny.
+- Studenti, vyučující a ostatní zaměstnanci mají přístup k harmonogramu a mohou tak plánovat své aktivity v průběhu akademického roku.
+- Zobrazení rozvrhů v systému je aktualizováno na základě uloženého harmonogramu.
+
+```plantuml
+@startuml
+left to right direction
+
+actor "Děkanát" as Dekanat
+actor "Student" as Student
+
+package "Modul rozvrhy" {
+  package "Specifikace harmonogramu" {
+    usecase "Vytvoření nového harmonogramu" as UC1
+    usecase "Zadání dat začátku a konce semestru, zkouškových období, \nprázdnin a datumov automatických kontrol" as UC2
+    usecase "Kontrola zadaných dat daného harmonogramu" as UC3
+    usecase "Uložení harmonogramu" as UC4
+    usecase "Úprava harmonogramu" as UC5
+    usecase "Zveřejnění harmonogramu" as UC6
+    usecase "Zobrazit všechny harmonogramy" as UC7
+    usecase "Zobrazit harmonogram" as UC8
+  }
+}
+
+Dekanat --> UC1
+Dekanat --> UC2
+Dekanat --> UC3
+Dekanat --> UC4
+Dekanat --> UC5
+Dekanat --> UC6
+Dekanat --> UC7
+Dekanat --> UC8
+
+UC8 <-- Student
+
+@enduml
+```
+
+#### Use case scenario: Kontrola rozvrhu 
+
+**Hlavní aktér:** `Student`, `Učitel` společne jako `Uživatel`.
+**Cíl:** Zkontrolovat osobní rozvrh pro zjištění časů výuky předmětů, které student navštěvuje v průběhu semestru.
+
+**Předpoklady**
+- `Uživatel` je přihlášen do systému.
+- V rozvrhu pro daný semestr má alespoň jeden rozvrženej předmět.
+
+**Normální scénář**
+- `Uživatel` otevře modul rozvrhů a zvolí možnost zobrazit svůj osobní rozvrh.
+- `Uživatel` zobrazí osobní rozvrh `Uživatele`, který zahrnuje časy a místa výuky předmětů, které `Uživatel` navštěvuje/bude navštěvovat v průběhu semestru.
+- `Uživatel` klikne na tlačítko `Kontrola rozvrhu`.
+- Systém spustí kontrolu kolizí předmětů. Kolize může být buď časová (předměty se překrývají), nebo dopravní (předměty se konají na místech, které se nedají stihnout po skončení výuky prvního předmětu).
+
+**Stav systému po dokončení operace:**
+- `Uživatel` je oboznámen s výsledkem. Může se tedy rozhodnout svůj rozvrh změnit.
+
+#### Use case scenario: Kontrola dodržení doporučeného průběhu studia 
+
+**Hlavní aktér:** `Systém`.
+**Cíl:** Systém automaticky zkontroluje, zda student splnil všechny povinné předměty v doporučených semestrech a zda má zapsané doporučené předměty pro daný semestr. Datumy a časy automatických kontrol jsou nastavovány při navrhování harmonogramu pro daný rok.
+
+**Předpoklady**
+- Doporučený průběh studia pro studijní program studenta je zveřejněn.
+- Systém má aktuální informace o předmětech, které student splnil a zapsal.
+
+**Normální scénář**
+- Systém automaticky provádí kontrolu dodržení doporučeného průběhu studia pro každého studenta na základě jeho studijního programu a aktuálního semestru.
+- Systém zkontroluje, zda student splnil všechny povinné předměty v doporučených semestrech dle studijního programu.
+- Systém zkontroluje, zda student má zapsané doporučené předměty pro aktuální semestr.
+- Pokud student splnil všechny povinné předměty v doporučených semestrech a má zapsané doporučené předměty pro aktuální semestr, systém zaznamená, že student dodržuje doporučený průběh studia.
+- V případě, že student nesplnil některé z povinných předmětů v doporučených semestrech nebo nemá zapsané doporučené předměty pro aktuální semestr, systém studenta upozorní a dodá mu seznam předmětů, které by mal mít už splněné.
+
+**Stav systému po dokončení operace:**
+- Systém obsahuje aktuální informace o tom, zda student dodržuje doporučený průběh studia pro svůj studijní program.
+- V případě nesplnění kritérií může systém informovat studenta nebo studijní oddělení o potřebě řešit problém.
+
+```plantuml
+@startuml
+left to right direction
+
+'======== Actors ========
+actor Student
+actor Učitel
+actor Děkanát
+
+'======== Use Cases ========
+package "Modul rozvrhy" {
+  package "Manuální kontroly" {
+    usecase "Kontrola kolizí svého rozvrhu" as UC2
+  }
+
+  Package "Automatické kontroly" {
+    usecase "Kontrola doporučeného průběhu studia" as UC1
+    usecase "?????????????????????????Kontrola kolizí rozvrhu učebny\nTODO: TO ZE NEJSOU V UCEBNE DVA TERMINY VE STEJNOU DOBU PRI ROZVRHOVANI DANEHO PREDMETU - \nVTEDY HO TO ROVNO UPOZORNI A NEBUDE AKO AUTOMATICKA KONTROLA" as UC3
+  }
+}
+
+'======== Use case links ========
+Student --> UC1
+Student --> UC2
+Učitel --> UC2
+
+'Right hand side
+UC1 <-- Děkanát
+UC3 <-- Děkanát
+@enduml
+```
+
 
 Šimon
 - Jako děkanát potřebujeme automatickou kontrolu, že doporučený průběh studia odpovídá prerekvizitám, abychom věděli, jestli jsme doporučený rozvrh navrhli tak, aby studenti byli schopni ho použít.
@@ -178,38 +372,6 @@ Managování míst
 
 
 Harmonogram (harmonogram rozvrhovou komisí + když profesor zruší předmět v 1 den)
-
-
-Automatické kontroly
-```plantuml
-@startuml
-left to right direction
-
-'======== Actors ========
-actor Student
-actor Učitel
-actor Děkanát
-actor "Rozvrhová komise" as RK
-
-'======== Use Cases ========
-package "Modul rozvrhy" {
-  Package "Automatické kontroly" {
-    usecase "Kontrola doporučeného průběhu studia" as UC1
-    usecase "Kontrola kolizí svého rozvrhu" as UC2
-    usecase "Kontrola kolizí rozvrhu učebny" as UC3
-  }
-}
-
-'======== Use case links ========
-Student --> UC2
-Učitel --> UC2
-
-'Right hand side
-UC1 <-- Děkanát
-UC3 <-- RK
-@enduml
-```
-
 
 Zobrazení rozvrhu
 ```plantuml
