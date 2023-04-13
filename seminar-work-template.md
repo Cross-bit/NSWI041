@@ -138,6 +138,42 @@ Pokud data byla při opouštění sekce `List evidence učebny` nevalidní učeb
 Managování předmětů (takové to vytvořit+smazat+upravit + ještě doporučený rozvrh + prerekvizity)
 
 
+#### Šimon
+
+#### Use case scenario: Provedení kontroly doporučeného rozvrhu děkanátem
+
+**Precondition**
+`Uživatel` je přihlášen jako člen `děkanátu` a je v podsekci modulu rozvrhy `Kontroly`.
+
+**Normal**
+1. `Uživatel` zvolí možnost `Provést kontrolu doporučeného průběhu studia`.
+2. `Uživatel` otevře se formulář pro specifikaci kontroly, například pro který studijní program má kontrola být provedena.
+3. Když `uživatel` formulář vyplní, začne se provádět kontrola.
+4. `Uživatel` si může kontrolu prohlídnout v podsekci 
+5. Po provedení kontroly uživatel dostane výsledek kontroly, včetně seznamu všech nalezených chyb.
+
+**Alternativní scénáře**
+- Po odeslání kontroly ji může `uživatel` zrušit, pokud ještě nedoběhla. V tomto případě je výsledek kontroly `zrušená`.
+
+**Stav systému po dokončení operace**
+Dokončená kontrola má stav `úspěšná`, `neúspěšná` a `zrušená`. `Uživatel` si ji může prohlédnout v podsekci modulu rozvrhy `Kontroly/Seznam`. Uživatel si může prohlídout seznam všech nalezených chyb.
+
+#### Use case scenario: Export svého rozvrhu
+
+**Precondition**
+`Uživatel` je přihlášen jako `student` nebo `učitel` a je v podsekci modulu rozvrhy `Zobrazit`.
+
+**Normal**
+1. `Uživatel` zvolí možnost `Exportovat`.
+2. Zobrazí se formulář pro určení formátu rozvrhu. `Uživatel` ho vyplní.
+3. Po odeslání formuláře se `uživateli` stáhne soubor s exportovanými daty.
+
+**Alternativní scénáře**
+- Pokud zrovna neprobíhá žádná výuka, které se `uživatel` účastní, tak je upozorněn a akce skončí. 
+
+**Stav systému po dokončení operace**
+Akce neovlivní stav systému. Uživatel má soubor s exportovanými daty ve svém počítači.
+
 Managování míst
 
 
