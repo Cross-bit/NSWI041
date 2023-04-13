@@ -9,7 +9,7 @@ actor "Rozvrhová komise" as RK
 package "Modul rozvrhy" {
 
 
-    Package "Evidence učeben a míst" { 
+    Package "Evidence učeben a míst" {
 
         Package "List evidence učebny" {
             usecase "Evidovat učebnu k místu" as UC1
@@ -20,12 +20,13 @@ package "Modul rozvrhy" {
 
         Package "List evidence místa" {
             usecase "Vytvořit nové místo" as UC5
-            usecase "Upravit exisutjící místo" as UC6            
+            usecase "Upravit exisutjící místo" as UC6
             usecase "Smazat místo" as UC7
         }
 
         usecase "Kontrola vstupních údajů" as UC8
     }
+
 
 '======== Use case links ========
 Děkanát --> UC3
@@ -45,5 +46,4 @@ UC3 .> UC1 : << includes >>
 
 UC8 .> UC2 : << extends >>
 UC8 .> UC1 : << extends >>
-
 }
