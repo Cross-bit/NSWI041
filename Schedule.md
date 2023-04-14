@@ -189,7 +189,7 @@ Osoba, která vyučuje předmět.
 `Uživatel` je přihlášen jako člen děkanátu a je v podsekci modulu rozvrhy `Předměty`.
 
 **Normální scénář**
-1. `Uživatel` zvolí možnost `Upravit existující předmět` a otevře se mu subsekce (formulář) pro tvorbu nového předmětu – `Nový předmět`.
+1. `Uživatel` zvolí možnost `Přidat nový předmět` a otevře se mu subsekce (formulář) pro tvorbu nového předmětu – `Nový předmět`.
 2. `Uživatel` v rámci tvorby dá předmětu název a vyplní další povinné informace.
 3. Když uživatel zadá hodnotu, provede se kontrola vstupu.
 4. V rámci vyplňování `uživatel` přiřadí předmět do konkrétních studijních programů.
@@ -200,7 +200,7 @@ Osoba, která vyučuje předmět.
 - Pokud jsou všechna pole validní a uživatel opustí podsekci `Nový předmět`, předmět je přidán do systému.
 
 **Stav systému po dokončení operace**
-Nově vytvořená učebna je v systému úspěšně evidovaná a `uživatel` si ji může zobrazit v seznamu všech učeben v sekci `Předměty`
+Nově vytvořený předmět je v systému úspěšně evidovaná a `uživatel` si ho může zobrazit v seznamu všech učeben v sekci `Předměty`
 
 #### **Use case scenario**: Evidence učebny děkanátem
 
