@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Studentsk&yacute; informa&ccaron;n&iacute; syst&eacute;m - Modul rozvrhy</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="studentský-informační-systém---modul-rozvrhy">Studentský informační systém - Modul rozvrhy</h1>
+<p>Modul rozvrhy slouží k vytváření a prohlížení rozvrhů.
+V rámci modulu jsou vedeny předměty a jejich příslušnost do studijních programů a jednotlivých semestrů studia,
+ve kterých jsou v rámci programu doporučeny.
+Dále jsou v rámci modulu vedeny učebny pro výuku a jejich kapacita.
+Pro každý předmět jsou evidovány rozvrhové lístky přednášek a cvičení, včetně jejich kapacit a vyučujících.
+Modul umožňuje rozvrhové komisi v jednotlivých semestrech vytváření centrálních rozvrhů přiřazováním rozvrhových lístků k učebnám na konkrétní den v týdnu a hodinu.
+Předměty ve stejném studijním programu a semestru musí být rozvrhovány tak, aby měli studenti v daném studijním programu a semestru možnost tyto předměty navštěvovat.
+Dále nesmí docházet k časovým kolizím jednoho učitele.
+Modul umožňuje vytvářet statistické reporty o vytíženosti místností v jednotlivých semestrech.</p>
+<h2 id="funkční-požadavky">Funkční požadavky</h2>
+<h3 id="uživatelské-požadavky">Uživatelské požadavky</h3>
+<ol>
+<li>
+<p>Děkanát potřebuje mít možnost vytvořit předmět, aby rozvrhová komise mohla vytvořit rozvrhové lístky danému předmětu.</p>
+</li>
+<li>
+<p>Děkanát potřebuje mít možnost upravit předmět, aby pokud dojde ke změnám v daném předmětu (např. změna názvu), rozvrhová komise pracovala s aktuálními daty.</p>
+</li>
+<li>
+<p>Děkanát potřebuje mít možnost smazat předmět, aby pokud se daný předmět zruší, nebyl již v systému dále registrovaný a rozvrhová komise k tomuto předmětu nevytvářela rozvrhové lístky.</p>
+</li>
+<li>
+<p>Děkanát by měl být schopen specifikovat příslušnost předmětu do studijního programu a prerekvizity, korekvizity... předmětu, aby studenti při zápisu věděli, zdali mají již všechny potřebné znalosti pro tento předmět.</p>
+</li>
+<li>
+<p>Jako děkanát potřebujeme být schopni specifikovat doporučený průběh studia, aby studenti:</p>
+<ul>
+<li>věděli, ve kterých semestrech si mají zapsat jaké předměty</li>
+<li>měli splněné prerekvizity a byli schopni lépe splnit všechny požadavky.
+Dále je to potřebné, aby rozvrhová komise věděla, které kombinace předmětů bude mít většina studentů zapsané ve stejném semestru a mohla je dát na různá místa v rozvrhu.</li>
+</ul>
+</li>
+<li>
+<p>Děkanát by měl být schopen zaevidovat místo (areál ve kterém výuka bude probíhat), aby:</p>
+<ul>
+<li>Se mohla k místu přiřadit učebna a provést kontrala návaznosti rovržení výuky</li>
+<li>Studenti a učitelé věděli, kam se mají dostavit na výuku.</li>
+<li>Rozvrhová komise mohla dát předměty pro stejný studijní program a semestr na jedno místo.</li>
+</ul>
+</li>
+<li>
+<p>Děkanát by měl být schopen zobrazit seznam všech učeben, aby věděl jaké učebny a k jakým místům eviduje.</p>
+</li>
+<li>
+<p>Děkanát by měl být schopen zaevidovat do systému učebnu, tj. přiradit ji k místu a specifikovat její kapacitu, aby ji rozvrhová komise mohla přidělit jednotlivým rozvrhovým lístkům a studenti a učitelé věděli kde budou mít výuku.</p>
+</li>
+<li>
+<p>Jako děkanát chceme být schopni specifikovat a zobrazit harmonogram, aby:</p>
+<ul>
+<li>Všichni uživatele věděli: kdy začíná a končí výuka, zkoušková období, kdy jsou prázdniny</li>
+<li>Systém věděl, kdy má zobrazovat jaký rozvrh.</li>
+</ul>
+</li>
+<li>
+<p>Jako děkanát bychom měli mít možnost si nechat automaticky vygenerovat statický report o vytížení místností v jednotlivých semestrech, abychom mohli dělat orgranizační rozhodnutí na základě těchto dat (úprava vytápění místností, zajištění nových prostor atd.).</p>
+</li>
+<li>
+<p>Jako děkanát si musíme být schopni zobrazit rozvrh předmětu, abychom mohli kontrolovat, zda probíhá výuka.</p>
+</li>
+<li>
+<p>Jako děkanát potřebujeme kontrolu, že doporučený průběh studia odpovídá prerekvizitám, abychom věděli, jestli jsme doporučený rozvrh navrhli tak, aby studenti byli schopni ho použít.</p>
+</li>
+<li>
+<p>Rozvrhová komise by měla být schopna vytvořit rozvhový lístek, aby se studenti mohli na daný předmět zapsat.</p>
+</li>
+<li>
+<p>Rozvrhová komise by měla být schopna smazat rozvhový lístek, aby se studenti na příslušný předmět nemohli zapisovat, pokud dojde ke zrušení předmětu, ke kterému je tento lístek určen.</p>
+</li>
+<li>
+<p>Rozvrhová komise by měla být schopna upravit rozvhový lístek, aby pokud vznikne při vytváření lístku chyba v obsahu, mohl být lístek upraven a studenti měli aktuální platná data.</p>
+</li>
+<li>
+<p>Jako rozvrhová komise potřebujeme zobrazit rozvrh jakéhokoli učitele, abychom věděli, jestli jsme k rozvrhovým lístkům přiřadili správné učitele.</p>
+</li>
+<li>
+<p>Jako rozvrhová komise potřebuji mít možstost provést kontrolu kolizí předmětů ve stejném studijním programu a semestr, aby měli studenti v daném studijním programu a semestru možnost tyto předměty navštěvovat.</p>
+</li>
+<li>
+<p>Jako rozvrhová komise chci kontrolu, že v jedné učebně nejsou naplánované dva termíny ve stejnou dobu, abych zabránil časovým konfliktům.</p>
+</li>
+<li>
+<p>Jako rozvrhová komise si musíme být schopni zobrazit rozvrh předmětu, abychom mohli kontrolovat, jestli jsme rozvrhové lístky naplánovali na dostatečné množství různých termínů.</p>
+</li>
+<li>
+<p>Jako rozvrhová komise si musíme být schopni zobrazit rozvrh rozvrhového lístku, abychom mohli zkontrolovat, že daný rozvrhový lístek dává smysl (jednotlivé části se nepřekryjí atd.).</p>
+</li>
+<li>
+<p>Jako rozvrhová komise bychom měli mít možnost si nechat automaticky vygenerovat statický report o vytížení místností v jednotlivých semestrech, abychom mohli lépe rozvrhovat výuku na základě těchto dat. Michael</p>
+</li>
+<li>
+<p>Jako student nebo učitel potřebuju exportovat svůj rozvrh, abych si ho mohl dát do kalendáře.</p>
+</li>
+<li>
+<p>Jako student nebo učitel potřebuju zobrazit svůj rozvrh, abych věděl, kdy a kde mám být.</p>
+</li>
+<li>
+<p>Jako student nebo učitel potřebuju zobrazit rozvrh jiného učitele, abych věděl, kdy se s ním můžu sejít.</p>
+</li>
+<li>
+<p>Jako student si musím být schopen zobrazit rozvrh předmětu, abych si mohl vybrat pro mě vhodnou paralelku přednášky či konkrétní vhodné cvičení.</p>
+</li>
+<li>
+<p>Jako student si musím být schopen zobrazit rozvrh rozvrhového lístku, abych se mohl rozhodnout zda mi vyhovuje.</p>
+</li>
+<li>
+<p>Jako student bych měl mít možnost nechat si zasílat upozornění na změnu ve výuce, abych věděl, kdy a kam mám přijít.</p>
+</li>
+<li>
+<p>Jako student potřebuji mít možnost provést kontrolu kolizí příhlášených předmětů, abych je mohl všechny navštěvovat.</p>
+</li>
+<li>
+<p>Jako učitel potřebuji mít možnost zrušit svou výuku v daném termínu, abych dal vědět účastníkům výuky, že se nemusí dostavit.</p>
+</li>
+<li>
+<p>Učitel má možnost požádat systém o provedení kontroly, aby mohol navštěvovat všechny termíny jeho výuky.</p>
+</li>
+</ol>
+<h3 id="systémové-požadavky">Systémové požadavky</h3>
+<h4 id="actors">Actors</h4>
+<h5 id="děkanát">Děkanát</h5>
+<p>Je výkonný orgán řízení fakulty po stránce hospodářské a administrativní.</p>
+<h5 id="rozvrhová-komise">Rozvrhová komise</h5>
+<p>Poradní orgán pro děkanát, který se zabývá vytvářením předmětů.</p>
+<h5 id="uživatel">Uživatel</h5>
+<p>Osoba, která má přístup do univerzitního systému.</p>
+<h5 id="student">Student</h5>
+<p>Osoba, která je zapsána ke studiu.</p>
+<h5 id="učitel">Učitel</h5>
+<p>Osoba, která vyučuje předmět.</p>
+<h4 id="use-case-scenario-specifikace-vytvoření-doporučeného-průběhu-studia"><strong>Use case scenario</strong>: Specifikace (vytvoření) doporučeného průběhu studia</h4>
+<p><strong>Cíl:</strong> Navrhnout doporučený průběh studia pro studenty s ohledem na prerekvizity a požadavky studijního programu.</p>
+<p><strong>Předpoklady</strong></p>
+<ul>
+<li><code>Uživatel</code> je přihlášen jako člen děkanátu a je v podsekci modulu rozvrhy
+<code>Doporučené průběhy</code>.</li>
+<li>Informace o prerekvizitách a požadavcích studijního programu jsou dostupné.</li>
+</ul>
+<p><strong>Normální scénář</strong></p>
+<ol>
+<li><code>Uživatel</code> otevře sekci pro vytvoření doporučeného průběhu studia.</li>
+<li>Systém zobrazí všechny studijní programy</li>
+<li><code>Uživatel</code> vybere studijní program, pro který chce vytvořit doporučený průběh studia.</li>
+<li>Systém získá seznam předmětů a informace o prerekvizitách z databáze. Informace o všech předmětech jsou zobrazeny spolu s ich prerekvizitami formou grafu nebo běžného seznamu.</li>
+<li><code>Uživatel</code> analyzuje jednotlivé předměty a jejich prerekvizity, aby zjistil, v jakém pořadí je studenti musí absolvovat.</li>
+<li><code>Uživatel</code> zohlední požadavky studijního programu, jako je minimální a maximální počet kreditů, povinné předměty, volitelné předměty a další specifické požadavky.</li>
+<li><code>Uživatel</code> navrhne doporučený průběh studia pomocí grafického rozhraní, které umožňuje přetahování předmětů z listu nebo grafu do jednotlivých semestrů a automaticky kontroluje splnění prerekvizit a požadavků studijního programu.</li>
+<li>Počas přetahování předmětů jsou předměty neustále kontrolovány na prerekvizity. Akonáhle je předmět umístnený bez prerekvizit, uživatel je patrične upozornen.</li>
+<li>Po navržení doporučeného průběhu studia grafické rozhraní zobrazí děkanátu přehledný plán s jednotlivými semestry a přiřazenými předměty.</li>
+<li><code>Uživatel</code> zkontroluje navržený průběh studia s ohledem na splnění všech požadavků a prerekvizit.</li>
+<li><code>Uživatel</code> potvrdí návrh doporučeného průběhu studia v systému pomocí tlačítka <code>uložit</code>.</li>
+<li>Systém uloží doporučený průběh studia.</li>
+<li>Po uložení se uživateli zobrazí možnost <code>editovat</code>, <code>zveřejnit</code> nebo <code>zmazat</code>studijní plán.</li>
+<li>Po kliknutí na zveřejnit se studijní plán zveřejní pro studenty.</li>
+</ol>
+<p><strong>Alternativní scénář:</strong></p>
+<ol start="4">
+<li><code>Uživatel</code> zjistí, že některé informace o prerekvizitách nebo požadavcích studijního programu chybí nebo jsou neaktuální:</li>
+</ol>
+<ul>
+<li><code>Uživatel</code> aktualizuje chybějící nebo neaktuální informace přímo v grafickém rozhraní a pokračuje v kroku <code>4</code> normálního scénáře.</li>
+</ul>
+<ol start="9">
+<li><code>Uživatel</code> zjistí, že navržený průběh studia nesplňuje všechny požadavky nebo prerekvizity:</li>
+</ol>
+<ul>
+<li><code>Uživatel</code> upraví doporučený průběh studia přímo v grafickém rozhraní. Poté pokračuje v kroku <code>9</code> normálního scénáře.</li>
+</ul>
+<p><strong>Stav systému po dokončení operace:</strong></p>
+<ul>
+<li>Systém obsahuje aktualizovaný, případně zveřejněný doporučený průběh studia, který splňuje všechny požadavky a prerekvizity studijního programu.</li>
+<li>Studenti mají přístup k doporučenému průběhu studia přes systém, který jim pomáhá plánovat a organizovat své studium.</li>
+<li>Děkanát může v případě potřeby snadno aktualizovat libovolný doporučený průběh studia pro libovolný studijní program.</li>
+</ul>
+<h4 id="use-case-scenario-vytvoření-novéh-harmonogramu"><strong>Use case scenario</strong>: Vytvoření novéh harmonogramu</h4>
+<p><strong>Cíl:</strong> Navrhnout harmonogram akademického roku pro studenty, vyučující a ostatní zaměstnance školy s ohledem na začátek a konec výuky, zkoušková období a prázdniny.</p>
+<p><strong>Předpoklady</strong></p>
+<ul>
+<li><code>Uživatel</code> je přihlášen jako člen děkanátu, má přístup k modulu rozvrhů a je v podsekci <code>Harmonogram</code>.</li>
+</ul>
+<p><strong>Normální scénář</strong></p>
+<ol>
+<li><code>Uživatel</code> otevře sekci pro specifikaci harmonogramu v modulu rozvrhů, kliknutím na tlačítko <code>Harmonogramy</code>.</li>
+<li>Systém zobrazí list všech už specifikovaných harmonogramů pro jednotlivé roky. Uživatel si může vyfiltrovat jenom nadcházející roky. Nad listom harmonogramů je tlačítko pro vytvoření nového harmonogramu.</li>
+<li><code>Uživatel</code> zvolí vytvoření nového harmonogramu.</li>
+<li>Systém zobrazí interaktivní formulář, který umožňuje zadávat data začátku a koncu semestrů, zkouškových období a prázdnin.</li>
+<li>Po zadání dat probehně kontrola, zda jsou data správně zadaná a nejsou v rozporu s předpisy školy nebo zákonem.</li>
+<li>Pokud jsou data správně zadána, <code>uživatel</code> uloží harmonogram. Takový harmonogram je zatím přístupný jenom děkanátu.</li>
+<li>Systém uloží harmonogram a zobrazí potvrzení o úspěšném uložení.</li>
+<li>Po uložení se uživateli zobrazí možnost <code>editovat</code>, <code>zveřejnit</code> nebo <code>smazat</code> harmonogram.</li>
+<li>Po zvolení <code>zveřejnit</code> se tento harmonogram stane volne dostupným pro přihlášených použivatelů.</li>
+</ol>
+<p><strong>Alternativní scénář:</strong>
+7. Uživatel chce vytvořit harmonogram který se datem už překrývá s jiným již vytvořeným harmonogramem. Nebo je nekterá kombinace datumů nesprávná ( napr. konec semestru je dřív než začátek ). Systém ho na tento problém upozorní a následuje krok <code>5</code> normálniho scenáře.</p>
+<p><strong>Stav systému po dokončení operace:</strong></p>
+<ul>
+<li>Systém obsahuje uložený, případně aktualizovaný harmonogram akademického roku, který zohledňuje výuku, zkoušková období a prázdniny.</li>
+<li>Studenti, vyučující a ostatní zaměstnanci mají přístup k harmonogramu a mohou tak plánovat své aktivity v průběhu akademického roku.</li>
+<li>Zobrazení rozvrhů v systému je aktualizováno na základě uloženého harmonogramu.</li>
+</ul>
+<h4 id="use-case-scenario-kontrola-svého-rozvrhu"><strong>Use case scenario</strong>: Kontrola svého rozvrhu</h4>
+<p><strong>Cíl:</strong> Zkontrolovat osobní rozvrh pro zjištění časů výuky předmětů, které student navštěvuje v průběhu semestru.</p>
+<p><strong>Předpoklady</strong></p>
+<ul>
+<li><code>Uživatel</code> je přihlášen do systému jako student nebo učitel.</li>
+<li>V rozvrhu pro daný semestr má alespoň jeden rozvržený předmět.</li>
+</ul>
+<p><strong>Normální scénář</strong></p>
+<ul>
+<li><code>Uživatel</code> otevře modul rozvrhů a zvolí možnost zobrazit svůj osobní rozvrh.</li>
+<li><code>Uživatel</code> zobrazí osobní rozvrh <code>uživatele</code>, který zahrnuje časy a místa výuky předmětů, které <code>uživatel</code> navštěvuje/bude navštěvovat v průběhu semestru.</li>
+<li><code>Uživatel</code> klikne na tlačítko <code>Kontrola rozvrhu</code>.</li>
+<li>Systém spustí kontrolu kolizí předmětů. Kolize může být buď časová (předměty se překrývají), nebo dopravní (předměty se konají na místech, které se nedají stihnout po skončení výuky prvního předmětu).</li>
+</ul>
+<p><strong>Stav systému po dokončení operace:</strong></p>
+<ul>
+<li><code>Uživatel</code> je obeznámen s výsledkem. Může se tedy rozhodnout svůj rozvrh změnit.</li>
+</ul>
+<h4 id="use-case-scenario-vytvoření-předmětu-děkanátem"><strong>Use case scenario</strong>: Vytvoření předmětu děkanátem</h4>
+<p><strong>Předpoklady</strong></p>
+<p><code>Uživatel</code> je přihlášen jako člen děkanátu a je v podsekci modulu rozvrhy <code>Předměty</code>.</p>
+<p><strong>Normální scénář</strong></p>
+<ol>
+<li><code>Uživatel</code> zvolí možnost <code>Upravit existující předmět</code> a otevře se mu subsekce (formulář) pro tvorbu nového předmětu – <code>Nový předmět</code>.</li>
+<li><code>Uživatel</code> v rámci tvorby dá předmětu název a vyplní další povinné informace.</li>
+<li>Když uživatel zadá hodnotu, provede se kontrola vstupu.</li>
+<li>V rámci vyplňování <code>uživatel</code> přiřadí předmět do konkrétních studijních programů.</li>
+<li><code>Uživatel</code> může u předmětu specifikovat prerekvizity a korekvizity z nabídky existujících předmětů.</li>
+</ol>
+<p><strong>Alternativní scénáře</strong></p>
+<ul>
+<li>Pokud dojde při validaci povinných dat k chybě uživatel je na tuto chybu upozorněn a vyzván k opravě.</li>
+<li>Pokud jsou všechna pole validní a uživatel opustí podsekci <code>Nový předmět</code>, předmět je přidán do systému.</li>
+</ul>
+<p><strong>Stav systému po dokončení operace</strong>
+Nově vytvořená učebna je v systému úspěšně evidovaná a <code>uživatel</code> si ji může zobrazit v seznamu všech učeben v sekci <code>Předměty</code></p>
+<h4 id="use-case-scenario-evidence-učebny-děkanátem"><strong>Use case scenario</strong>: Evidence učebny děkanátem</h4>
+<p><strong>Předpoklady</strong></p>
+<p><code>Uživatel</code> je přihlášen jako člen děkanátu a systému eviduje <code>místo</code>, člen otevřel sekci <code>Evidence učeben a míst</code> v modulu rozvrhy.</p>
+<p><strong>Normální scénář</strong></p>
+<ol>
+<li><code>Uživatel</code> zadá pokyn vytvoření nového záznamu učebny.</li>
+<li><code>Uživatel</code> specifikuje kapacitu učebny.</li>
+<li>Provede se kontrola vstupních údajů.</li>
+<li><code>Uživatel</code> zadá evidovat učebnu k místu a přidá existující místo z nabídky, kterou mu systém poskytne.</li>
+<li>Opět se provede kontrola vstupních údajů zdali místo bylo vyplněno.</li>
+<li>Uživatel opustí podsekci <code>List evidence učebny</code>.</li>
+</ol>
+<p><strong>Alternativní scénáře</strong></p>
+<ul>
+<li>Uživatel zadá do kapacity učebny nesprávnou hodnotu (obsahuje např. text) a při kontrole je informován o neplatnosti zadaných údajů. Uživatel může chybu opravit zadáním kapacity ve správném formátu.</li>
+<li>Uživatel chce k učebně přiřadit místo, ale to v systému neexistuje. Uživatel tedy před zadáním místnosti musí tuto místnost vytvořit.</li>
+<li>Pokud nejsou všechna data vyplněna, nebo vstupy obsahují neplatná data,
+uložení nové učebny při výstupu z podsekce <code>List evidence učebny</code> selže.</li>
+</ul>
+<p><strong>Stav systému po dokončení operace</strong></p>
+<ul>
+<li>Nově vytvořená učebna je v systému úspěšně evidovaná a <code>uživatel</code> si ji může zobrazit v seznamu všech učeben.</li>
+<li>Pokud data byla při opouštění sekce <code>List evidence učebny</code> nevalidní učebna není v systému evidována.</li>
+</ul>
+<h4 id="use-case-scenario-provedení-kontroly-doporučeného-rozvrhu-děkanátem"><strong>Use case scenario</strong>: Provedení kontroly doporučeného rozvrhu děkanátem</h4>
+<p><strong>Předpoklady</strong></p>
+<p><code>Uživatel</code> je přihlášen jako člen děkanátu a je v podsekci modulu rozvrhy <code>Kontroly</code>.</p>
+<p><strong>Normální scénář</strong></p>
+<ol>
+<li><code>Uživatel</code> zvolí možnost <code>Provést kontrolu doporučeného průběhu studia</code>.</li>
+<li><code>Uživatel</code> otevře se formulář pro specifikaci kontroly, například pro který studijní program má kontrola být provedena.</li>
+<li>Když <code>uživatel</code> formulář vyplní, začne se provádět kontrola.</li>
+<li><code>Uživatel</code> si může kontrolu prohlídnout v podsekci</li>
+<li>Po provedení kontroly <code>uživatel</code> dostane výsledek kontroly, včetně seznamu všech nalezených chyb.</li>
+</ol>
+<p><strong>Alternativní scénáře</strong></p>
+<ul>
+<li>Po odeslání kontroly ji může <code>uživatel</code> zrušit, pokud ještě nedoběhla. V tomto případě je výsledek kontroly <code>zrušená</code>.</li>
+</ul>
+<p><strong>Stav systému po dokončení operace</strong>
+Dokončená kontrola má stav <code>úspěšná</code>, <code>neúspěšná</code> a <code>zrušená</code>. <code>Uživatel</code> si ji může prohlédnout v podsekci modulu rozvrhy <code>Kontroly/Seznam</code>. Uživatel si může prohlédnout seznam všech nalezených chyb.</p>
+<h4 id="use-case-scenario-export-svého-rozvrhu"><strong>Use case scenario</strong>: Export svého rozvrhu</h4>
+<p><strong>Předpoklady</strong></p>
+<p><code>Uživatel</code> je přihlášen jako student nebo učitel a je v podsekci modulu rozvrhy <code>Zobrazit</code>.</p>
+<p><strong>Normální scénář</strong></p>
+<ol>
+<li><code>Uživatel</code> zvolí možnost <code>Exportovat</code>.</li>
+<li>Zobrazí se formulář pro určení formátu rozvrhu. <code>Uživatel</code> ho vyplní.</li>
+<li>Po odeslání formuláře se <code>uživateli</code> stáhne soubor s exportovanými daty.</li>
+</ol>
+<p><strong>Alternativní scénáře</strong></p>
+<ul>
+<li>Pokud zrovna neprobíhá žádná výuka, které se <code>uživatel</code> účastní, tak je upozorněn a akce je ukončena.</li>
+</ul>
+<p><strong>Stav systému po dokončení operace</strong>
+Akce neovlivní stav systému. <code>Uživatel</code> má soubor s exportovanými daty ve svém počítači.</p>
+<h4 id="use-case-scenario-vytvoření-reportu-o-využití-místností"><strong>Use case scenario</strong>: Vytvoření reportu o využití místností</h4>
+<p><strong>Předpoklady</strong></p>
+<p><code>Uživatel</code> je přihlášen jako člen děkanátu.</p>
+<p><strong>Normální scénář</strong></p>
+<ol>
+<li>Otevře si <code>Modul rozvrhy</code>.</li>
+<li>Vybere podsekci <code>Výstupy</code>.</li>
+<li>Zvolí možnost <code>Vytvoření reportu o využití místností</code>.</li>
+<li>Vybere si, za které semestry chce vygenerovat daný report.</li>
+<li>Systém zkontroluje, že je zvolený nějaký semestr.</li>
+<li>Systém vygeneruje report.</li>
+<li><code>Uživatel</code> si stáhne daný report.</li>
+</ol>
+<p><strong>Alternativní scénáře</strong></p>
+<ul>
+<li><code>Uživatel</code> nezvolil žádné období (semestr). V tom případě je vyzván ke zvolení nějakého období.</li>
+<li>Nastane chyba při zpracování dat. V tom případě se chyba zaloguje a uživatel je o ní informován.</li>
+</ul>
+<p><strong>Stav systému po dokončení operace</strong></p>
+<ul>
+<li><code>Uživatel</code> si úspěšně uložil vygenerovaný report.</li>
+<li>Při zpracování nastala chyba a tato chyba byla zalogována pro další šetření.</li>
+</ul>
+<h3 id="uml-doporučený-průběh-studia">UML Doporučený průběh studia</h3>
+<img src="https://www.plantuml.com/plantuml/svg/ZP2nRW8n38PtFuLr-mqmL-YaidP2xS1cai15TurFYNCI81wX3r0nTUnGyGITEDwh4KUZidNo__lNPzckWf2N-Df2bLLhreB2wEsc5jJM6oMM7G0fOO_5V3WsvCuVKY05d9jaI7x3XKHjt1ZTD417gg6DmUA9TMpHywxtzRR0FI3cx6KhFL_UZJj_eUQEVHpUalci6Jj_EQs6Onqnf96MHX8n1gCe97RH6MNNjk6Uv2_ydT5CfhsU7wVt-99NddRsN-WaeGSu0DmEnxASNTltVWgGclXGblaDbN7w-kcn_W00" alt="uml diagram">
+<h3 id="uml-specifikace-harmonogramu">UML Specifikace harmonogramu</h3>
+<img src="https://www.plantuml.com/plantuml/svg/RPAzQiCm4CTtFSMHtO5w2PHW0csXIw2qf4CsLLPZnROko2T3NF88VO2IAME7qYVePFkzgjYEqoGTX7Htl_zzI9fan0tPD66J_fJ8Lm92C6eH4OJAI44ADMDS41guhROnr-MEElk9R2WrCRRY8kOB2OCfXZO1WqLkelK0tXX07xld9aMD2yFJDW9WCobuvcBFQygn_f2w_0ADUVaP8KH7tWw0Pp2xkJfLtOMAk93_aVufESSNmmj5Vz6E73bouzP3FqFzlUn6kEXpRcozSsbINBfEy_B7neUAqyUpxcOhBD1eHsiEHLfjjOLSDY8XUv7VbDymrbykU5xGp7hkyIyy8pQhtXN9fBFtFR0cAumzx_W-ZZntE1I6-_SUja8Vhc4y1gL5ufWCWe1Df0wR_z7klm00" alt="uml diagram">
+<h3 id="uml-kontroly">UML Kontroly</h3>
+<img src="https://www.plantuml.com/plantuml/svg/XP4zRiCm38LtdOBmxg4_Or4OQBUWImmVGBPLMuqj6X9b82boX1wWy9InGv0JTB9zhogAadOfCedWqyUdHoM6k2RRDYovL8ru9I04BQkQe9HQ52HHCSOBGWrHIhOKYa297C5E7v944m4ta6RdAqlSzBh6Vjp12bjfXDUNYw0_JyEAgt57Z7MyMF5AGFI2fMr0Ut0TmJi3k6WBLAIn2Mq0QqJ1pQ_0dKiZD-CUJ3z-rHZ6ME-QFTty0vNOeNO1XF9Gf-T3FWsr1UCIIXxesokMmUku2P6hTQ3khb0TzbAfyRkeePi_HTbE0ys7a_ER6lV7liPAytO-X97tRkIMRHbBCuZZHn-CkVV1Gnp_MQdpzXstRSUSoqIeqd_pwVm1" alt="uml diagram">
+<h3 id="uml-zobrazení">UML Zobrazení</h3>
+<img src="https://www.plantuml.com/plantuml/svg/VP8xRiCm38PtdOBmxY6FiIWCj5jH88ZXfPjYAx4YnJGaoa1Jv0WzG94fOuUWXx1ph_eDByd4d-BtamIXm18tv0wQ1QFIOaj024RkKe946X6Jn8mn7XCQ2Cab8gC-y_eKCh51SDMt9A4zu1R2g4TUgxFYMNaPBMiy5YR5eho0meEqekNNRupbF5Py9y1xnyHfC2tuwS4N0rWDjG_S67uKMNdj0TS10CwAcDiHaLG3THtosuz83jMPN3ifUbdDxl9DmpxK6_wc2BgyMbAZTV7OkkUgSIdK4dA3Ms7HyC6xlEErnUrlttSOs7dDdjY9iU72ll_ShHv6WvvFz6AYbumr93pv_kJyJQ5zga_T62PwDkX0P4dx7Rhu3m00" alt="uml diagram">
+<h3 id="uml-výstupy-export-statistika-atd">UML Výstupy (export, statistika atd...)</h3>
+<img src="https://www.plantuml.com/plantuml/svg/RP2_JiCm48TtFyLFsJEm8nJ-JGW91RMxbPZ6IkAhxBFLWFe8F01YwiZGLs1n-ru49oeTc7p-xkux-mh7qhBlEr6SeawzC9XWzQfXrDggYZKP8MJ5P75t-6obYJkUxrb9hy4s5E8EBVNQgGpIeNmGOYshLguKiaUgVGUR2eSCRm9ucdEbMfFb8J70ErL9DtOi1mvq_50cxc5JYGSX3FxuhNbaVTmxDkJ6E8rRt5vVZ8RjcVb-ywzvmd0XVZKqlydFZfl9iHNYcNsj32FFhoQ-EBnhLjqV4ByZSPddPniveV7tXJ9rMknq_W00" alt="uml diagram">
+<h4 id="správa-předmětů">Správa předmětů</h4>
+<img src="https://www.plantuml.com/plantuml/svg/XL91Ri8m4Bpx5IlE3L8BN2eK8RNNIaY87dhREWPC4ZkoDr6JYeSWJZm0zGKzXVohJWYe45KzUNTsPknTxyGI6ahZY4qkKIGM1AJ1oEMA8916S99QCOQSj87duov4LUwfpMUK1a8HOmdo49S2UYywI2CmkiZCAk_19mEOjhLfjHL1VDnHti00gHKShHEzvfJfQYi9bCxARqZEp1wWXVdJzFwQFqyCPeujFgIbT5qUU7deYXwkHRCO2_nFCxZMlEbtWuMxwKBCpypXZNiYk5p8K6VOiCk3ZT9ghxHrOzIG6Bqq65TVTouKHeIPTBOv88JwafsjHyvwmpQCrPr3tsymU8Jn6AJYaHkv1TzlosFF-_KjTTjTQD25XbreT0ETpFhrIlpzXdO3mFFyqrGcGWNDJftE7m00" alt="uml diagram">
+<h4 id="tvorba-rozvrhu">Tvorba rozvrhu</h4>
+<img src="https://www.plantuml.com/plantuml/svg/VP6xRi9044Nx-OgHUnS4oYYob3AAX41Gf9lO6xpoOz3kh2KSyI4fAIdu12gK_ueVQmStL7kbkUVEOoChPCGLEKIZojMNe30QlKi54srKB9fB08g53GOhhYkJSdKxOSQ5jYf0ihXwy_Mrk4IL0h2dEAETmk2T4vUZwR13WD-0k1ngOzWPyzl5IkODYCwgc6nZsHwaujyVBJwYCLzxiygwrflNvMoARFQ6geV0qnHO5rJJ8_zywl_WJqFrsE4VFAVi5t43kcZG8nm1sZdnEGpRMxKZtEdvdLuC6lmfCGnV-Y28L9bqlzM_Vm00" alt="uml diagram">
+<h4 id="evidence-učeben">Evidence učeben</h4>
+<img src="https://www.plantuml.com/plantuml/svg/ZLDBJiCm4Dtd5AFkWzH2Fq9LLGdOWOI4oeATwxYjIM9NzZYYGHo10o1MNRBe4M2JzbwuIVh9fm8l4kVDUpEUvybG8r5emi0PxdS1co2W1CMdCmIFAqQHI-4uXA9KSBt-z8b8bfX_ZpO_F2B80iUP4-gJAOF6dVHC04h6aPej6l3gW5ttk-XDn3qcA0EpVcTZ9e10cAmqReafiy2-vHg1bIIxdBjbDAD4vxcbFKv650RyBBTf0D4mkchMonuN6CdD1qSGCag-8KwMiI1XdcMHYy_hnGzpHlc4-sbTdrWNE9gIj5KlVP9ZHM9RLhD3lMrxgUXYBthxqvYqItBIbsA3NnbTvdNQzPhHN978AjWBrmQVanLDLaLXvuGX8Ocj5GLgzty6v8EGIdf7xMTFQuEz1UYxxj4OMdChIBk2T2f8ju8qIuYpdsrmtK5w8MMabvteRBjlmINq-y053Op7D0m6XrYp6XiouQL_NlR-1G00" alt="uml diagram">
+<h2 id="information-model">Information model</h2>
+<img src="https://www.plantuml.com/plantuml/svg/TLJBJjmm5DtxAwwoGQf4rTaYMb51fGeAHGFJHNTESiMO97PaEoFDq7v1uGD6h6R9OigYQzWa-P5-IVr8PfosP1C_ZkyzvzvZ7oXDfQwAd1niHZjl-myESweKAjYi4BApstzmZb893aa7scmG6YijQQ8XchJFR4OrvX5G1HE54k2603ItzLhb0eGIyTpCZulwWGipE6-NzVgwG5wlpUptZv_aEo4k0rpeAaMktVcnQEuC97EBZ6v1qQIvOts-IwJ9rAIy2VQRsnmvIB6OoQcOrG-GYO8fTFYBP7fAERtgZmHQF-HeIEbG9K5U5H1TpiiWt5H0RgJfhF8Hg_WQ4sqmw7WRUPZoUjMkCcgcXpFMt7LQBx1WTcTfOP9cccLLOLduD9_ZLCJr6fJXOQhRXVUJIrRuy5zPuODzGcq7szfve0DraLmLiw0oOoUYBmIcLOvXvJvIMGWkhYGj1WLraehcNeU2NQApUhN0cHcSrBzIhz2IiFfC-r33YSIKwVOnY7OaIY4hLvGdA6Nx63VtKr2kopw16SxFSye79CPz0vvy-J7hTKmuysoEg76tbL_Ip01Nlb0djAG9qxOPN-OcRtLThnEtOuo4CG-jTMeZ2nVO44XyoT-d4jLV1hJd7CpT7ob4uQ2RNDPQsqisnfng9lZWchchil_DEA-pVR3IsNe0sZYNa6tIwCthrwyYOrc8Hb77UG_Ep6dJ6USbU4T8NwGXkc_a7hZQji_creJWqHRPBUt1CKBPBbcxf8iDslieX7Sk8A6X_hU_xNJ0p8ywSWEjem70StfHNCVB9x6FohyfGbKBMYhZ62kfVrEYqOi7EYFvuWOFWCsylnjm2svllzUBFq2UkcVP__y0" alt="uml diagram">
+<h3 id="student-1">Student</h3>
+<p>Osoba, která je zapsána ke studiu.</p>
+<h3 id="děkanát-1">Děkanát</h3>
+<p>Je výkonný orgán řízení fakulty po stránce hospodářské a administrativní.</p>
+<h3 id="rozvrhová-komise-1">Rozvrhová komise</h3>
+<p>Poradní orgán pro děkanát, který se zabývá vytvářením předmětů.</p>
+<h3 id="uživatel-1">Uživatel</h3>
+<p>Osoba, která má přístup do univerzitního systému.</p>
+<h3 id="učitel-1">Učitel</h3>
+<p>Osoba, která vyučuje předmět.</p>
+<h3 id="učebna">Učebna</h3>
+<p>Lokace, kde probíhá výuka</p>
+<h3 id="rozvrhový-lístek">Rozvrhový lístek</h3>
+<p>Základní jednotka rovržení výuky předmětu, určuje čas a místo výuky, výuku předmětu zajišťuje učitel, který je uveden v rozvrhovém lístku. Rozvrhový
+lístek je vytvořen pro každý předmět, který se vyučuje v daném semestru.</p>
+<h3 id="doporučený-průběh-studia">Doporučený průběh studia</h3>
+<p>Doporučený průběh studia je plán nebo struktura studijního programu, který určuje ideální posloupnost předmětů a jejich zařazení do jednotlivých semestrů. Tento plán pomáhá studentům získat přehled o tom, které předměty by měli absolvovat v každém semestru, aby dosáhli úspěšného a efektivního dokončení svého studijního programu v rámci stanoveného časového rámce.</p>
+<h3 id="místo">Místo</h3>
+<p>Místo je budova, areál obsahující učebny, ve kterých probíhá výuka.</p>
+<h3 id="hamonogram">Hamonogram</h3>
+<p>Harmonogram univerzity je plán událostí během akademického roku, který zahrnuje začátek a konec semestrů, termíny zkouškových období, přestávky, státní svátky a další.</p>
+<h3 id="rozvrh">Rozvrh</h3>
+<p>Rozvhr je seskupení rozvrhových lístků v semestru konkrétního studenta nebo učitele.</p>
+<h3 id="semestr">Semestr</h3>
+<p>Období jednoho pololetí, kdy se vyučuje.</p>
+<h3 id="předmět">Předmět</h3>
+<p>Předmět je jednotka vzdělávacího procesu, která se skládá z přednášek, cvičení, seminářů nebo praktik a je součástí studijního programu. Každý předmět má svůj název, kód, kreditovou hodnotu a je zařazen do určitého semestru studia.</p>
+
+        
+        
+    </body>
+    </html>
